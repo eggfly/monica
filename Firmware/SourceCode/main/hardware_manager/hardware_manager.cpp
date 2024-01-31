@@ -78,6 +78,7 @@ namespace HM {
     void Hardware_Manager::_update_power_infos()
     {
         *_power_infos.battery_level_ptr = pmu.batteryLevel();
+        *_power_infos.battery_voltage_ptr = pmu.getBattVoltage() / 1000.0f;
         *_power_infos.battery_is_charging_ptr = pmu.isCharging();
     }
 
@@ -196,6 +197,7 @@ namespace HM {
         _rtc_data.time_just_set_ptr = (bool*)getDatabase()->Get(MC_TIME_JSUT_SET)->addr;
 
         /* Power infos */
+        _power_infos.battery_voltage_ptr = (float*)getDatabase()->Get(MC_BATTERY_VOLTAGE)->addr;
         _power_infos.battery_level_ptr = (uint8_t*)getDatabase()->Get(MC_BATTERY_LEVEL)->addr;
         _power_infos.battery_is_charging_ptr = (bool*)getDatabase()->Get(MC_BATTERY_IS_CHARGING)->addr;
 

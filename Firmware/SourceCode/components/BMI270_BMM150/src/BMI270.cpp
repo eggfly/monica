@@ -370,7 +370,7 @@ namespace BMI270 {
 
             if (rslt == BMI2_OK)
             {
-                config.cfg.wrist_gest.wearable_arm = BMI2_ARM_RIGHT;
+                config.cfg.wrist_gest.wearable_arm = BMI2_ARM_LEFT;
 
                 /* Set the new configuration along with interrupt mapping */
                 rslt = bmi270_set_sensor_config(&config, 1, &bmi2);

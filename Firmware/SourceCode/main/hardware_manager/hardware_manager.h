@@ -27,6 +27,7 @@ namespace HM {
 
 
     struct PowerInfos_t {
+        float* battery_voltage_ptr = nullptr;
         uint8_t* battery_level_ptr = nullptr;
         bool* battery_is_charging_ptr = nullptr;
     };
@@ -55,7 +56,7 @@ namespace HM {
     struct PowerManager_t {
         PowerMode_t power_mode = mode_normal;
 
-        uint32_t auto_sleep_time = 8000;
+        uint32_t auto_sleep_time = 15000;
     };
 
 

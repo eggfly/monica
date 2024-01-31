@@ -164,6 +164,36 @@ namespace AXP2101 {
             }
 
 
+            inline void setRegisterBit(uint8_t registers, uint8_t bit)
+            {
+                _readReg(registers, 1);
+                int val = _data_buffer[0];
+                if (val == -1) {
+                    return;
+                }                       
+                _writrReg(registers, (val | (1ULL << (bit))));
+            }
+
+            void enableBattVoltageMeasure(void)
+            {
+                setRegisterBit(0x30, 0);
+            }
+
+            uint16_t inline readRegisterH5L8(uint8_t highReg, uint8_t lowReg)
+            {
+                _readReg(highReg, 1);
+                int h5 = _data_buffer[0];
+                _readReg(lowReg, 1);
+                int l8 = _data_buffer[0];
+                if (h5 == -1 || l8 == -1)return 0;
+                return ((h5 & 0x1F) << 8) | l8;
+            }
+
+            uint16_t getBattVoltage(void)
+            {
+                return readRegisterH5L8(0x34, 0x35);
+            }
+
             /* Power control */
             inline void powerOff()
             {
