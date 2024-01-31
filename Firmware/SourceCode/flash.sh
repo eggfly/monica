@@ -4,9 +4,11 @@
 
 
 # Configs
-IDF_PATH=$HOME/esp/esp-idf
-SERIAL_PORT=/dev/ttyACM0
+IDF_PATH=$HOME/esp-idf-v5.0.2
 
+SERIAL_PORT=`ls /dev/cu.usbmodem*`
+
+echo "Serial detected: $SERIAL_PORT"
 
 # Help shit
 help() {
