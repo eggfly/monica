@@ -155,7 +155,7 @@ namespace HM {
             lv_obj_invalidate(lv_scr_act());
 
             /* Display on */
-            disp.setBrightness(200);
+            disp.setBrightness(BRIGHTNESS);
         }
     }
 

@@ -39,7 +39,8 @@ namespace LVGL {
 
                 _disp->startWrite();
                 _disp->setWindow(area->x1, area->y1, area->x2, area->y2);
-                _disp->pushPixels(&color_p->full, w * h, true);
+                // _disp->pushPixels(&color_p->full, w * h, true);
+                _disp->pushPixelsDMA(&color_p->full, w * h, true);
                 _disp->endWrite();
 
                 /*IMPORTANT!!!
