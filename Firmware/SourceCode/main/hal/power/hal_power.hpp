@@ -82,13 +82,16 @@ namespace AXP2101 {
                 _readReg(0x62, 1);
                 ESP_LOGI(TAG, "read 0x62 get: 0x%X", _data_buffer[0]);
                 
-                /* 100mA */
+                /* 100mA -> 0b00000100 */
+                // 200mA -> 0b00001000
+                // 400mA -> 0b00001010
+                // 500mA -> 0b00001011
                 _data_buffer[0] = _data_buffer[0] & 0b11100000;
-                _data_buffer[0] = _data_buffer[0] | 0b00000100;
+                _data_buffer[0] = _data_buffer[0] | 0b00001011;
                 _writrReg(0x62, _data_buffer[0]);
 
                 _readReg(0x62, 1);
-                ESP_LOGI(TAG, "read 0x62 get: 0x%X", _data_buffer[0]);
+                ESP_LOGI(TAG, "read charge current limit 0x62 get: 0x%X", _data_buffer[0]);
 
 
                 return true;
