@@ -6,22 +6,21 @@
 # Configs
 IDF_PATH=$HOME/esp-idf-v5.0.2
 
-SERIAL_PORT=`ls /dev/cu.usbmodem*`
 
-echo "Serial detected: $SERIAL_PORT"
+function do_work() {
+    unsetopt nomatch
+    # Get idf
+    . ${IDF_PATH}/export.sh
+    SERIAL_PORT=`ls /dev/cu.usbmodem* 2>/dev/null`
+    if [[ -z "$SERIAL_PORT" ]]; then
+        echo "No esp32 serial port detected, exit.";
+        return;
+    else
+        echo "Detected serial port : $SERIAL_PORT"
+    fi
 
-# Help shit
-help() {
-    sed -rn 's/^### ?//;T;p' "$0"
+    # Build and flash and monitor
+    idf.py -p ${SERIAL_PORT} flash monitor
 }
 
-if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
-    help
-    exit 1
-fi
-
-# Get idf
-. ${IDF_PATH}/export.sh
-
-# Build and flash and monitor
-idf.py -p ${SERIAL_PORT} flash monitor
+do_work
