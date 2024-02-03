@@ -48,66 +48,66 @@ namespace BMI270 {
         print_rslt(rslt);
 
 
-        // /* BMM150 init */
-        // bmm1.chip_id = BMM150_DEFAULT_I2C_ADDRESS;
-        // bmm1.read = bmi2_i2c_read;
-        // bmm1.write = bmi2_i2c_write;
-        // bmm1.delay_us = bmi2_delay_us;
-        // bmm1.intf = BMM150_I2C_INTF;
-        // bmm1.intf_ptr = &mag_dev_info;
+        /* BMM150 init */
+        bmm1.chip_id = BMM150_DEFAULT_I2C_ADDRESS;
+        bmm1.read = bmi2_i2c_read;
+        bmm1.write = bmi2_i2c_write;
+        bmm1.delay_us = bmi2_delay_us;
+        bmm1.intf = BMM150_I2C_INTF;
+        bmm1.intf_ptr = &mag_dev_info;
 
-        // mag_dev_info.i2c_port = _i2c_port;
-        // mag_dev_info.dev_addr = bmm1.chip_id;
+        mag_dev_info.i2c_port = _i2c_port;
+        mag_dev_info.dev_addr = bmm1.chip_id;
 
-        // rslt = bmm150_init(&bmm1);
-        // print_rslt(rslt);
-        // rslt = configure_sensor(&bmm1);
-        // print_rslt(rslt);
-
-
-        // /* BMI270 Aux init */
-        // bmi2_sens_config config;
-        // config.type = BMI2_AUX;
-
-        // /* Get config */
-        // rslt = bmi270_get_sensor_config(&config, 1, &bmi2);
-        // bmi2_error_codes_print_result(rslt);
-
-        // /* Rewrite */
-        // config.cfg.aux.odr = BMI2_AUX_ODR_50HZ;
-        // config.cfg.aux.aux_en = BMI2_ENABLE;
-        // config.cfg.aux.i2c_device_addr = BMM150_DEFAULT_I2C_ADDRESS;
-        // config.cfg.aux.fcu_write_en = BMI2_ENABLE;
-        // config.cfg.aux.man_rd_burst = BMI2_AUX_READ_LEN_3;
-        // config.cfg.aux.read_addr = BMM150_REG_DATA_X_LSB;
-        // // config.cfg.aux.manual_en = BMI2_ENABLE;
-        // config.cfg.aux.manual_en = BMI2_DISABLE;
-
-        // /* Set back */
-        // rslt = bmi270_set_sensor_config(&config, 1, &bmi2);
-        // bmi2_error_codes_print_result(rslt);
+        rslt = bmm150_init(&bmm1);
+        print_rslt(rslt);
+        rslt = configure_sensor(&bmm1);
+        print_rslt(rslt);
 
 
-        // /* BMM150 init */
-        // bmm1.chip_id = BMM150_DEFAULT_I2C_ADDRESS;
-        // bmm1.read = aux_i2c_read;
-        // bmm1.write = aux_i2c_write;
-        // bmm1.delay_us = bmi2_delay_us;
-        // bmm1.intf = BMM150_I2C_INTF;
-        // bmm1.intf_ptr = &mag_dev_info;
+        /* BMI270 Aux init */
+        bmi2_sens_config config;
+        config.type = BMI2_AUX;
 
-        // mag_dev_info.i2c_port = _i2c_port;
-        // mag_dev_info.dev_addr = bmm1.chip_id;
+        /* Get config */
+        rslt = bmi270_get_sensor_config(&config, 1, &bmi2);
+        bmi2_error_codes_print_result(rslt);
 
-        // rslt = bmm150_init(&bmm1);
-        // print_rslt(rslt);
-        // rslt = configure_sensor(&bmm1);
-        // print_rslt(rslt);
+        /* Rewrite */
+        config.cfg.aux.odr = BMI2_AUX_ODR_50HZ;
+        config.cfg.aux.aux_en = BMI2_ENABLE;
+        config.cfg.aux.i2c_device_addr = BMM150_DEFAULT_I2C_ADDRESS;
+        config.cfg.aux.fcu_write_en = BMI2_ENABLE;
+        config.cfg.aux.man_rd_burst = BMI2_AUX_READ_LEN_3;
+        config.cfg.aux.read_addr = BMM150_REG_DATA_X_LSB;
+        // config.cfg.aux.manual_en = BMI2_ENABLE;
+        config.cfg.aux.manual_en = BMI2_DISABLE;
+
+        /* Set back */
+        rslt = bmi270_set_sensor_config(&config, 1, &bmi2);
+        bmi2_error_codes_print_result(rslt);
 
 
-        // /* Map data ready interrupt to interrupt pin. */
-        // rslt = bmi2_map_data_int(BMI2_DRDY_INT, BMI2_INT1, &bmi2);
-        // bmi2_error_codes_print_result(rslt);
+        /* BMM150 init */
+        bmm1.chip_id = BMM150_DEFAULT_I2C_ADDRESS;
+        bmm1.read = aux_i2c_read;
+        bmm1.write = aux_i2c_write;
+        bmm1.delay_us = bmi2_delay_us;
+        bmm1.intf = BMM150_I2C_INTF;
+        bmm1.intf_ptr = &mag_dev_info;
+
+        mag_dev_info.i2c_port = _i2c_port;
+        mag_dev_info.dev_addr = bmm1.chip_id;
+
+        rslt = bmm150_init(&bmm1);
+        print_rslt(rslt);
+        rslt = configure_sensor(&bmm1);
+        print_rslt(rslt);
+
+
+        /* Map data ready interrupt to interrupt pin. */
+        rslt = bmi2_map_data_int(BMI2_DRDY_INT, BMI2_INT1, &bmi2);
+        bmi2_error_codes_print_result(rslt);
 
 
 

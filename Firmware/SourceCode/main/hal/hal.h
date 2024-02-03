@@ -86,6 +86,6 @@ class HAL {
          * 
          */
         void checkBootMode();
-
+        void jingle_bells();
 
 };

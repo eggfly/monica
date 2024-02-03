@@ -64,7 +64,7 @@ namespace lgfx
         write_cmd(0x11);
         _bus->wait();
         cs_control(true);
-        delay(150);
+        delay(15);
 
         cs_control(false);
         write_cmd(0x44);

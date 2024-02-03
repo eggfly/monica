@@ -177,7 +177,13 @@ namespace HM {
         /* Key Down */
         if (btnB.pressed()) {
             *_key_data.key_down_ptr = true;
+            pmu.powerOff();
         }
+        // float x, y, z;
+        // int avail = imu.magneticFieldAvailable();
+        // float sampleRate = imu.magneticFieldSampleRate();
+        // int code = imu.readMagneticField(x, y, z);
+        // ESP_LOGI(TAG, "MagneticField, %d, rate=%f, avail=%d, x=%f,y=%f,z=%f\n", code, sampleRate, avail, x, y, z);
     }
 
 

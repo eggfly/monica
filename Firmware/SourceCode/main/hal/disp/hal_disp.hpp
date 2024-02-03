@@ -88,11 +88,10 @@ class LGFX_Monica : public lgfx::LGFX_Device {
 
 
         inline bool init(void) {
-            
             /* PEN pin */
             gpio_reset_pin(GPIO_NUM_4);
             gpio_set_direction(GPIO_NUM_4, GPIO_MODE_OUTPUT);
-            gpio_set_pull_mode(GPIO_NUM_4, GPIO_PULLUP_PULLDOWN);
+            // gpio_set_pull_mode(GPIO_NUM_4, GPIO_PULLUP_PULLDOWN);
             gpio_set_level(GPIO_NUM_4, 1);
             // vTaskDelay(pdMS_TO_TICKS(10));
 
