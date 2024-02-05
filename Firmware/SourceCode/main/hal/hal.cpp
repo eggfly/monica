@@ -18,7 +18,7 @@ void HAL::init()
     /* Display */
     disp.init();
     disp.setColorDepth(16);
-    disp.setBrightness(200);
+    disp.setBrightness(BRIGHTNESS);
 
 
     /* Touch pad and I2C port 0 (default) */

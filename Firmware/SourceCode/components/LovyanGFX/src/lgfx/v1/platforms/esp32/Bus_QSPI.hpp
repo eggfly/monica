@@ -69,7 +69,7 @@ namespace lgfx
     struct config_t
     {
       // max80MHz , 40MHz , 26.67MHz , 20MHz , 16MHz , and more ...
-      uint32_t freq_write = 16000000;
+      uint32_t freq_write = 2000000;
       uint32_t freq_read  =  8000000;
       int16_t pin_sclk = -1;
     //   int16_t pin_miso = -1;

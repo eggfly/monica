@@ -26,15 +26,15 @@ Contributors:
   #include "esp32/Light_PWM.hpp"
   #include "esp32/Bus_SPI.hpp"
   #include "esp32/Bus_I2C.hpp"
-  #include "esp32c3/Bus_Parallel8.hpp"
+  // #include "esp32c3/Bus_Parallel8.hpp"
 
  #elif defined (CONFIG_IDF_TARGET_ESP32S2)
 
   #include "esp32/Light_PWM.hpp"
   #include "esp32/Bus_SPI.hpp"
   #include "esp32/Bus_I2C.hpp"
-  #include "esp32s2/Bus_Parallel8.hpp"
-  #include "esp32s2/Bus_Parallel16.hpp"
+  // #include "esp32s2/Bus_Parallel8.hpp"
+  // #include "esp32s2/Bus_Parallel16.hpp"
 
  #elif defined (CONFIG_IDF_TARGET_ESP32S3)
 
@@ -42,8 +42,8 @@ Contributors:
   #include "esp32/Bus_SPI.hpp"
   #include "esp32/Bus_QSPI.hpp"
   #include "esp32/Bus_I2C.hpp"
-  #include "esp32s3/Bus_Parallel8.hpp"
-  #include "esp32s3/Bus_Parallel16.hpp"
+  // #include "esp32s3/Bus_Parallel8.hpp"
+  // #include "esp32s3/Bus_Parallel16.hpp"
 
  #else
 
@@ -51,9 +51,9 @@ Contributors:
   #include "esp32/Bus_SPI.hpp"
   #include "esp32/Bus_QSPI.hpp"
   #include "esp32/Bus_I2C.hpp"
-  #include "esp32/Bus_Parallel8.hpp"
-  #include "esp32/Bus_HUB75.hpp"
-  #include "esp32/Panel_CVBS.hpp"
+  // #include "esp32/Bus_Parallel8.hpp"
+  // #include "esp32/Bus_HUB75.hpp"
+  // #include "esp32/Panel_CVBS.hpp"
 
  #endif
 

@@ -69,7 +69,15 @@ namespace FT3168 {
                 /* 关闭监视器模式 */
                 _writrReg(0x86, 0x00);
                 /* 触摸阈值 */
-                _writrReg(0x80, 0x7D);
+                // _writrReg(0x80, 0x7D);
+                _writrReg(0x80, 0x01);
+                // _writrReg(0x80, 0xBB);
+
+                // ID_G_PERIODACTIVE -> sampling rate
+                // 默认 0x08, 最小0x04, 最大0x14
+                // _writrReg(0x88, 0x14);
+                _writrReg(0x88, 0x14);
+                // ESP_LOGI(TAG, "ID_G_PERIODACTIVE, %d", _data_buffer[0]);
             }
 
 
@@ -194,9 +202,11 @@ namespace FT3168 {
             inline bool isTouched()
             {
                 if (_cfg.pin_int > 0) {
+                    printf("int_pin=%d\n", _cfg.pin_int);
                     return (gpio_get_level((gpio_num_t)_cfg.pin_int) == 0) ? true : false;
                 }
                 _readReg(0x00, 7);
+                ESP_LOGI(TAG, "_readReg, pin_int=%d,%d", _cfg.pin_int, _data_buffer[2]);
                 return (_data_buffer[2] != 0x00) ? true : false;
             }
 
@@ -208,18 +218,20 @@ namespace FT3168 {
 
                 if (_cfg.pin_int > 0) {
                     if (gpio_get_level((gpio_num_t)_cfg.pin_int) != 0) {
+                        // printf("!touch, return%d\n", _cfg.pin_int);
                         return;
                     }
                 }
 
                 /* Start reading from 0x00 */
                 _readReg(0x00, 7);
-                if (_data_buffer[2] != 0x00) {
+                //if (_data_buffer[2] != 0x00) {
                     tp.event = (_data_buffer[3] >> 6) & 0x03;
                     tp.x     = ((_data_buffer[3] & 0x0F) << 8) | _data_buffer[4];
                     tp.id    = (_data_buffer[5] >> 4) & 0x0F;
                     tp.y     = ((_data_buffer[5] & 0x0F) << 8) | _data_buffer[6];
-                }
+                //}
+                ESP_LOGI(TAG, "getTouchRaw,%d,e=%d,id=%d,x=%d,y=%d", _data_buffer[2], tp.event, tp.id, tp.x, tp.y);
             }
 
     };

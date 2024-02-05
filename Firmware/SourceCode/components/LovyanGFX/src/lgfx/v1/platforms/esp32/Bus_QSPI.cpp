@@ -198,15 +198,22 @@ namespace lgfx
 
   void Bus_QSPI::beginTransaction(void)
   {
-//ESP_LOGI("LGFX","Bus_QSPI::beginTransaction");
     uint32_t freq_apb = getApbFrequency();
     uint32_t clkdiv_write = _clkdiv_write;
-    if (_last_freq_apb != freq_apb)
-    {
+    // 160mhz -> div=2147483648
+    if (_last_freq_apb != freq_apb) {
+      ESP_LOGI(
+          "LGFX",
+          "Bus_QSPI::beginTransaction,_last_freq_apb=%lu,freq_apb=%lu",
+          _last_freq_apb, freq_apb);
       _last_freq_apb = freq_apb;
       _clkdiv_read = FreqToClockDiv(freq_apb, _cfg.freq_read);
       clkdiv_write = FreqToClockDiv(freq_apb, _cfg.freq_write);
       _clkdiv_write = clkdiv_write;
+      ESP_LOGI(
+          "LGFX",
+          "Bus_QSPI::set clock: _clkdiv_read=%lu,clkdiv_write=%lu,clkdiv_write=%lu",
+          _clkdiv_read, clkdiv_write, clkdiv_write);
       dc_control(true);
       pinMode(_cfg.pin_dc, pin_mode_t::output);
     }
@@ -875,6 +882,7 @@ label_start:
 
   void Bus_QSPI::endRead(void)
   {
+    // ESP_LOGI("LGFX", "e");
     uint32_t pin = (_cfg.spi_mode & 2) ? SPI_CK_IDLE_EDGE : 0;
     *_spi_user_reg = _user_reg;
     *reg(SPI_PIN_REG(_spi_port)) = pin;

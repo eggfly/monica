@@ -39,8 +39,8 @@ namespace LVGL {
 
                 _disp->startWrite();
                 _disp->setWindow(area->x1, area->y1, area->x2, area->y2);
-                // _disp->pushPixels(&color_p->full, w * h, true);
-                _disp->pushPixelsDMA(&color_p->full, w * h, true);
+                _disp->pushPixels(&color_p->full, w * h, true);
+                // _disp->pushPixelsDMA(&color_p->full, w * h, true);
                 _disp->endWrite();
 
                 /*IMPORTANT!!!
@@ -54,7 +54,7 @@ namespace LVGL {
             {
                 _tp->getTouchRaw(_tpp);
                 if(_tpp.x != -1) {
-                    // printf("%d %d\n", tpp.x, tpp.y);
+                    // ESP_LOGI(TAG, "_touchpad_read: %d %d", _tpp.x, _tpp.y);
                     data->point.x = _tpp.x;
                     data->point.y = _tpp.y;
                     data->state = LV_INDEV_STATE_PR;

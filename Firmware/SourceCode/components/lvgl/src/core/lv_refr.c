@@ -399,7 +399,7 @@ void _lv_disp_refr_timer(lv_timer_t * tmr)
         perf_monitor.fps_sum_all += fps;
         perf_monitor.fps_sum_cnt ++;
         uint32_t cpu = 100 - lv_timer_get_idle();
-        lv_label_set_text_fmt(perf_label, "%"LV_PRIu32" FPS    \n%"LV_PRIu32"%% CPU      ", fps, cpu);
+        lv_label_set_text_fmt(perf_label, "%"LV_PRIu32" FPS %"LV_PRIu32"%% CPU      ", fps, cpu);
     }
 #endif
 
@@ -427,8 +427,7 @@ void _lv_disp_refr_timer(lv_timer_t * tmr)
         uint32_t used_kb = used_size / 1024;
         uint32_t used_kb_tenth = (used_size - (used_kb * 1024)) / 102;
         lv_label_set_text_fmt(mem_label,
-                              "    %"LV_PRIu32 ".%"LV_PRIu32 " kB used (%d %%)\n"
-                              "      %d%% frag.",
+                              "       %"LV_PRIu32 ".%"LV_PRIu32 " kB used (%d %%) %d%% frag.",
                               used_kb, used_kb_tenth, mon.used_pct,
                               mon.frag_pct);
     }
