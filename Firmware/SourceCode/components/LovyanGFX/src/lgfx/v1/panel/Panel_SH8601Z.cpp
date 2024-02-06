@@ -45,7 +45,7 @@ namespace lgfx
     /* Panel init */
     bool Panel_SH8601Z::init(bool use_reset)
     {
-        // ESP_LOGD("SH8601Z","pannel init %d", use_reset);
+        ESP_LOGD("SH8601Z","pannel init %d", use_reset);
         
         if (!Panel_Device::init(use_reset)) {
             return false;
@@ -129,7 +129,7 @@ namespace lgfx
 
     void Panel_SH8601Z::setBrightness(uint8_t brightness)
     {
-        // ESP_LOGD("SH8601Z","setBrightness %d", brightness);
+        ESP_LOGD("SH8601Z","setBrightness %d", brightness);
 
         startWrite();
 
@@ -146,7 +146,7 @@ namespace lgfx
 
     void Panel_SH8601Z::setRotation(uint_fast8_t r)
     {
-        // ESP_LOGD("SH8601Z","setRotation %d", r);
+        ESP_LOGD("SH8601Z","setRotation %d", r);
 
         r &= 7;
         _rotation = r;
@@ -181,7 +181,7 @@ namespace lgfx
 
     void Panel_SH8601Z::setInvert(bool invert)
     {
-        // ESP_LOGD("SH8601Z","setInvert %d", invert);
+        ESP_LOGD("SH8601Z","setInvert %d", invert);
 
         cs_control(false);
     
@@ -201,7 +201,7 @@ namespace lgfx
 
     void Panel_SH8601Z::setSleep(bool flg)
     {
-        // ESP_LOGD("SH8601Z","setSleep %d", flg);
+        ESP_LOGD("SH8601Z","setSleep %d", flg);
 
         cs_control(false);
     
@@ -222,13 +222,13 @@ namespace lgfx
 
     void Panel_SH8601Z::setPowerSave(bool flg)
     {
-        // ESP_LOGD("SH8601Z","setPowerSave");
+        ESP_LOGD("SH8601Z","setPowerSave");
     }
 
 
     void Panel_SH8601Z::waitDisplay(void)
     {
-        // ESP_LOGD("SH8601Z","waitDisplay");
+        ESP_LOGD("SH8601Z","waitDisplay");
     }
 
 
@@ -350,7 +350,7 @@ namespace lgfx
 
     void Panel_SH8601Z::setWindow(uint_fast16_t xs, uint_fast16_t ys, uint_fast16_t xe, uint_fast16_t ye)
     {
-        // ESP_LOGD("SH8601Z","setWindow %d %d %d %d", xs, ys, xe, ye);
+        ESP_LOGI("SH8601Z","setWindow %d %d %d %d", xs, ys, xe, ye);
         
         /* Set limit */
         if ((xe - xs) >= _width) { xs = 0; xe = _width - 1; }
@@ -400,7 +400,7 @@ namespace lgfx
 
     void Panel_SH8601Z::writePixels(pixelcopy_t* param, uint32_t len, bool use_dma)
     {
-        // ESP_LOGD("SH8601Z","writePixels %ld %d", len, use_dma);
+        ESP_LOGD("SH8601Z","writePixels %ld %d, no_convert=%d %d %d", len, use_dma, param->no_convert, param->src_depth, param->dst_depth);
 
         start_qspi();
 
@@ -421,7 +421,7 @@ namespace lgfx
 
     void Panel_SH8601Z::drawPixelPreclipped(uint_fast16_t x, uint_fast16_t y, uint32_t rawcolor)
     {
-        // ESP_LOGD("SH8601Z","drawPixelPreclipped %d %d 0x%lX", x, y, rawcolor);
+        ESP_LOGD("SH8601Z","drawPixelPreclipped %d %d 0x%lX", x, y, rawcolor);
 
         setWindow(x,y,x,y);
         if (_cfg.dlen_16bit) { _has_align_data = (_write_bits & 15); }
@@ -437,7 +437,7 @@ namespace lgfx
 
     void Panel_SH8601Z::writeFillRectPreclipped(uint_fast16_t x, uint_fast16_t y, uint_fast16_t w, uint_fast16_t h, uint32_t rawcolor)
     {
-        // ESP_LOGD("SH8601Z","writeFillRectPreclipped %d %d %d %d 0x%lX", x, y, w, h, rawcolor);
+        ESP_LOGI("SH8601Z","writeFillRectPreclipped %d %d %d %d 0x%lX", x, y, w, h, rawcolor);
 
         uint32_t len = w * h;
         uint_fast16_t xe = w + x - 1;
@@ -456,7 +456,7 @@ namespace lgfx
 
   void Panel_SH8601Z::writeImage(uint_fast16_t x, uint_fast16_t y, uint_fast16_t w, uint_fast16_t h, pixelcopy_t* param, bool use_dma)
   {
-    // ESP_LOGD("SH8601Z","writeImage %d %d %d %d %d", x, y, w, h, use_dma);
+    ESP_LOGI("SH8601Z","writeImage() %d %d %d %d %d, %d %d %p %d", x, y, w, h, use_dma, param->src_depth, param->dst_depth, param->palette, param->no_convert);
     // use_dma = false;
 
     auto bytes = param->dst_bits >> 3;

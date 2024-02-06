@@ -16,6 +16,16 @@
 
 #include "lv_demos.h"
 
+// static inline uint32_t micros_start() __attribute__ ((always_inline));
+// static inline uint32_t micros_start()
+// {
+//   uint8_t oms = millis();
+//   while ((uint8_t)millis() == oms)
+//     ;
+//   return micros();
+// }
+
+
 
 namespace LVGL {
 
@@ -39,8 +49,8 @@ namespace LVGL {
 
                 _disp->startWrite();
                 _disp->setWindow(area->x1, area->y1, area->x2, area->y2);
-                _disp->pushPixels(&color_p->full, w * h, true);
-                // _disp->pushPixelsDMA(&color_p->full, w * h, true);
+                // _disp->pushPixels(&color_p->full, w * h, true);
+                _disp->pushPixelsDMA(&color_p->full, w * h, true);
                 _disp->endWrite();
 
                 /*IMPORTANT!!!
@@ -143,6 +153,40 @@ namespace LVGL {
 
 
         public:
+
+            void testRects(lgfx::LGFX_Device& tft, uint16_t color)
+            {
+            uint32_t start;
+            int32_t n, i, i2;
+            int32_t cx = tft.width() / 2;
+            int32_t cy = tft.height() / 2;
+
+            tft.fillScreen(TFT_BLACK);
+            n = std::min(tft.width(), tft.height());
+            for (i = 2; i < n; i += 6)
+            {
+                i2 = i / 2;
+                tft.drawRect(cx - i2, cy - i2, i, i, color);
+            }
+
+            }
+            void testFastLines(lgfx::LGFX_Device& tft, uint16_t color1, uint16_t color2)
+            {
+            uint32_t start;
+            int32_t x, y;
+            int32_t w = tft.width();
+            int32_t h = tft.height();
+
+            tft.fillScreen(TFT_BLACK);
+
+
+            for (y = 0; y < h; y += 5)
+                tft.drawFastHLine(0, y, w, color1);
+            for (x = 0; x < w; x += 5)
+                tft.drawFastVLine(x, 0, h, color2);
+
+            }
+
             /**
              * @brief Lvgl init
              * 
@@ -152,6 +196,10 @@ namespace LVGL {
             inline void init(lgfx::LGFX_Device* disp, FT3168::TP_FT3168* tp)
             { 
                 _disp = disp;
+                vTaskDelay(pdMS_TO_TICKS(1000));
+                testFastLines(*disp, TFT_RED,TFT_BLUE);
+                vTaskDelay(pdMS_TO_TICKS(1000));
+                testRects(*disp, TFT_GREEN);
                 _tp = tp;
                 
                 lv_init();

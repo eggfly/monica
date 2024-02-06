@@ -177,6 +177,9 @@ namespace HM {
         /* Key Down */
         if (btnB.pressed()) {
             *_key_data.key_down_ptr = true;
+            disp.setBrightness(1);
+            vTaskDelay(pdMS_TO_TICKS(100));
+            // disp.powerSaveOn();
             pmu.powerOff();
         }
         // float x, y, z;

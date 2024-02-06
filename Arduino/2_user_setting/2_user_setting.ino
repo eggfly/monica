@@ -12,7 +12,7 @@ class LGFX : public lgfx::LGFX_Device {
         cfg.spi_host = SPI3_HOST;     // 使用するSPIを選択  ESP32-S2,C3 : SPI2_HOST or SPI3_HOST / ESP32 : VSPI_HOST or HSPI_HOST
         // ※ ESP-IDFバージョンアップに伴い、VSPI_HOST , HSPI_HOSTの記述は非推奨になるため、エラーが出る場合は代わりにSPI2_HOST , SPI3_HOSTを使用してください。
         cfg.spi_mode = 1;             // SPI通信モードを設定 (0 ~ 3)
-        cfg.freq_write = 10000000;    // 送信時のSPIクロック (最大80MHz, 80MHzを整数で割った値に丸められます)
+        cfg.freq_write = 40 * 1000 * 1000; // 送信時のSPIクロック (最大80MHz, 80MHzを整数で割った値に丸められます)
         cfg.freq_read  = 16000000;    // 受信時のSPIクロック
         cfg.spi_3wire  = true;        // 受信をMOSIピンで行う場合はtrueを設定
         cfg.use_lock   = true;        // トランザクションロックを使用する場合はtrueを設定
@@ -144,9 +144,9 @@ void loop(void)
   display.endWrite();
 
   int32_t x, y;
-  if (display.getTouch(&x, &y)) {
-    display.fillRect(x - 2, y - 2, 5, 5, count * 7);
-  }
+  //  if (display.getTouch(&x, &y)) {
+  //    display.fillRect(x - 2, y - 2, 5, 5, count * 7);
+  //  }
 
   display.setTextColor(0xFFFFFFU);
   display.setTextDatum(textdatum_t::middle_center);
@@ -171,25 +171,25 @@ void loop2(void)
   Serial.println(usecHaD);
   delay(100);
 
-  uint32_t usecFillScreen = testFillScreen();
-  Serial.print(F("Screen fill              "));
-  Serial.println(usecFillScreen);
-  delay(100);
-
-  uint32_t usecText = testText();
-  Serial.print(F("Text                     "));
-  Serial.println(usecText);
-  delay(100);
-
-  uint32_t usecPixels = testPixels();
-  Serial.print(F("Pixels                   "));
-  Serial.println(usecPixels);
-  delay(100);
-
-  uint32_t usecLines = testLines(TFT_BLUE);
-  Serial.print(F("Lines                    "));
-  Serial.println(usecLines);
-  delay(100);
+  //  uint32_t usecFillScreen = testFillScreen();
+  //  Serial.print(F("Screen fill              "));
+  //  Serial.println(usecFillScreen);
+  //  delay(100);
+  //
+  //  uint32_t usecText = testText();
+  //  Serial.print(F("Text                     "));
+  //  Serial.println(usecText);
+  //  delay(100);
+  //
+  //  uint32_t usecPixels = testPixels();
+  //  Serial.print(F("Pixels                   "));
+  //  Serial.println(usecPixels);
+  //  delay(100);
+  //
+  //  uint32_t usecLines = testLines(TFT_BLUE);
+  //  Serial.print(F("Lines                    "));
+  //  Serial.println(usecLines);
+  //  delay(100);
 
   uint32_t usecFastLines = testFastLines(TFT_RED, TFT_BLUE);
   Serial.print(F("Horiz/Vert Lines         "));
@@ -274,25 +274,25 @@ void loop2(void)
   tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
   printnice(usecHaD);
 
-  tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-  tft.print(F("Screen fill        "));
-  tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
-  printnice(usecFillScreen);
+  //  tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
+  //  tft.print(F("Screen fill        "));
+  //  tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+  //  printnice(usecFillScreen);
 
-  tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-  tft.print(F("Text               "));
-  tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
-  printnice(usecText);
-
-  tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-  tft.print(F("Pixels             "));
-  tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
-  printnice(usecPixels);
-
-  tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-  tft.print(F("Lines              "));
-  tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
-  printnice(usecLines);
+  //  tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
+  //  tft.print(F("Text               "));
+  //  tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+  //  printnice(usecText);
+  //
+  //  tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
+  //  tft.print(F("Pixels             "));
+  //  tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+  //  printnice(usecPixels);
+  //
+  //  tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
+  //  tft.print(F("Lines              "));
+  //  tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+  //  printnice(usecLines);
 
   tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
   tft.print(F("Horiz/Vert Lines   "));
