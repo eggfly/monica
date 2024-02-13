@@ -140,14 +140,13 @@ static void lv_rlottie_constructor(const lv_obj_class_t * class_p, lv_obj_t * ob
 
     // rlottie->allocated_buf = malloc(allocaled_buf_size + 1);
     rlottie->allocated_buf = heap_caps_malloc(allocaled_buf_size+1, MALLOC_CAP_SPIRAM);
-
     if(rlottie->allocated_buf != NULL) {
-        printf("malloc %d ok\n", allocaled_buf_size);
+        printf("lottie: malloc %d ok\n", allocaled_buf_size);
         rlottie->allocated_buffer_size = allocaled_buf_size;
         memset(rlottie->allocated_buf, 0, allocaled_buf_size);
     }
     else {
-        printf("malloc %d failed\n", allocaled_buf_size);
+        printf("lottie: malloc %d failed\n", allocaled_buf_size);
     }
     
 

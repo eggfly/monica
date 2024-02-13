@@ -31,6 +31,7 @@
 #include <vector>
 #include "vdebug.h"
 #include "vglobal.h"
+#include <esp_log.h>
 
 V_BEGIN_NAMESPACE
 
@@ -49,6 +50,7 @@ static inline uint8_t divBy255(int x)
 inline static void copy(const VRle::Span *span, size_t count,
                         std::vector<VRle::Span> &v)
 {
+    // ESP_LOGE("lottie", "add %d, %d\n", count, v.size());
     // make sure enough memory available
     if (v.capacity() < v.size() + count) v.reserve(v.size() + count);
     std::copy(span, span + count, back_inserter(v));

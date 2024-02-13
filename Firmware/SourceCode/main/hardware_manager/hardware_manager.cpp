@@ -12,7 +12,7 @@
 #include "../hal/hal_config.h"
 #include <esp_log.h>
 #include <esp_sleep.h>
-
+#include <hal/wdt_hal.h>
 
 #define delay(ms) vTaskDelay(pdMS_TO_TICKS(ms))
 
@@ -226,6 +226,11 @@ namespace HM {
 
     void Hardware_Manager::init()
     {
+        // wdt_hal_context_t rtc_wdt_ctx = RWDT_HAL_CONTEXT_DEFAULT();
+        // wdt_hal_write_protect_disable(&rtc_wdt_ctx);
+        // wdt_hal_disable(&rtc_wdt_ctx);
+        // wdt_hal_write_protect_enable(&rtc_wdt_ctx);
+
         HAL::init();
     }
 
