@@ -125,7 +125,6 @@ namespace SD_CARD {
 
                 _available = true;
 
-
                 // /* Test */
                 // std::string path = "/sdcard/nihao.txt";
 
@@ -141,9 +140,9 @@ namespace SD_CARD {
 
 
 
-                // // std::string path = "/sdcard/nihao.txt";
+                // std::string path = "/sdcard/nihao.txt";
                 // std::string path = "/sdcard/app_icons/app_icon_hdpi_canvas.png";
-                // FILE *f = fopen(path.c_str(), "r");
+                // f = fopen(path.c_str(), "r");
                 // if (f == NULL) {
                 //     ESP_LOGE(TAG, "Failed to open file for reading");
                     
@@ -155,7 +154,7 @@ namespace SD_CARD {
                 // fgets(line, 2048, f);
                 // fclose(f);
 
-                // // strip newline
+                // strip newline
                 // char *pos = strchr(line, '\n');
                 // if (pos) {
                 //     *pos = '\0';

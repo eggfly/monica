@@ -56,6 +56,27 @@ void HAL::init()
     lvgl.init(&disp, &tp);
 
 
+    lv_fs_file_t f;
+    lv_fs_res_t res;
+    res = lv_fs_open(&f, "A:sdcard/boot_anim/background.png", LV_FS_MODE_RD);
+    if (res != LV_FS_RES_OK)  {
+        ESP_LOGE("sdcard", "lv_fs_open 1 ERROR: %d", res);
+    }
+    lv_fs_close(&f);
+
+    res = lv_fs_open(&f, "A:sdcard/nihao.txt", LV_FS_MODE_RD);
+    if (res != LV_FS_RES_OK)  {
+        ESP_LOGE("sdcard", "lv_fs_open 2 ERROR: %d", res);
+    }
+    lv_fs_close(&f);
+
+    // lv_fs_dir_t dir;
+    // res = lv_fs_dir_open(&dir, "A:/");
+    // if(res != LV_FS_RES_OK) {
+    //     ESP_LOGE("sdcard", "lv_fs_dir_open ERROR: %d", res);
+    // }
+
+
     /* IMU BMI270 + BMM150 */
     imu.init();
     /* Setup wrist wear wakeup interrupt */

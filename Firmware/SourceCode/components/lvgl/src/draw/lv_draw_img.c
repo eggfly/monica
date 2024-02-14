@@ -13,6 +13,7 @@
 #include "../core/lv_refr.h"
 #include "../misc/lv_mem.h"
 #include "../misc/lv_math.h"
+#include <esp_log.h>
 
 /*********************
  *      DEFINES
@@ -213,6 +214,7 @@ lv_img_src_t lv_img_src_get_type(const void * src)
         LV_LOG_WARN("lv_img_src_get_type: unknown image type");
     }
 
+    // ESP_LOGE("lv_draw_img", "lv_img_src_get_type, src=%s,type=%d", (char*)src, img_src_type);
     return img_src_type;
 }
 

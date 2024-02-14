@@ -76,7 +76,7 @@ void lv_img_set_src(lv_obj_t * obj, const void * src)
     lv_img_src_t src_type = lv_img_src_get_type(src);
     lv_img_t * img = (lv_img_t *)obj;
 
-#if LV_USE_LOG && LV_LOG_LEVEL >= LV_LOG_LEVEL_INFO
+#if LV_USE_LOG && LV_LOG_LEVEL <= LV_LOG_LEVEL_INFO
     switch(src_type) {
         case LV_IMG_SRC_FILE:
             LV_LOG_TRACE("lv_img_set_src: `LV_IMG_SRC_FILE` type found");

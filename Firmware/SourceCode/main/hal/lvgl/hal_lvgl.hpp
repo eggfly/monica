@@ -196,10 +196,10 @@ namespace LVGL {
             inline void init(lgfx::LGFX_Device* disp, FT3168::TP_FT3168* tp)
             { 
                 _disp = disp;
-                vTaskDelay(pdMS_TO_TICKS(1000));
-                testFastLines(*disp, TFT_RED,TFT_BLUE);
-                vTaskDelay(pdMS_TO_TICKS(1000));
-                testRects(*disp, TFT_GREEN);
+                // vTaskDelay(pdMS_TO_TICKS(1000));
+                // testFastLines(*disp, TFT_RED,TFT_BLUE);
+                // vTaskDelay(pdMS_TO_TICKS(1000));
+                // testRects(*disp, TFT_GREEN);
                 _tp = tp;
                 
                 lv_init();

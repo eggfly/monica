@@ -56,7 +56,7 @@ namespace HM {
     struct PowerManager_t {
         PowerMode_t power_mode = mode_normal;
 
-        uint32_t auto_sleep_time = 15000;
+        uint32_t auto_sleep_time = 60*1000;
     };
 
 

@@ -7,6 +7,7 @@
  *      INCLUDES
  *********************/
 #include "../lvgl.h"
+#include <esp_log.h>
 
 /*********************
  *      DEFINES
@@ -52,6 +53,7 @@ void lv_extra_init(void)
 
 #if LV_USE_FS_STDIO != '\0'
     lv_fs_stdio_init();
+    ESP_LOGE("lv_extra", "lv_fs_stdio_init() called");
 #endif
 
 #if LV_USE_FS_POSIX != '\0'
@@ -68,10 +70,12 @@ void lv_extra_init(void)
 
 #if LV_USE_PNG
     lv_png_init();
+    ESP_LOGE("lv_extra", "lv_png_init() called");
 #endif
 
 #if LV_USE_SJPG
     lv_split_jpeg_init();
+    ESP_LOGE("lv_extra", "lv_split_jpeg_init() called");
 #endif
 
 #if LV_USE_BMP
