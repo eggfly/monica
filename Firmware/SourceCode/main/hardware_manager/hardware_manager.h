@@ -41,6 +41,16 @@ namespace HM {
     };
 
 
+    struct SensorData_t {
+        /* update sensor data in 1Hz */
+        int64_t update_interval = 1000000;
+        int64_t update_count = 0;
+        float * temperature;
+        float * pressure;
+        float * humidity;
+    };
+
+
     enum PowerMode_t {
         mode_normal = 0,
         mode_going_sleep,
@@ -80,12 +90,14 @@ namespace HM {
             PowerInfos_t _power_infos;
             PowerManager_t _power_manager;
             ImuData_t _imu_data;
+            SensorData_t _sensor_data;
             SystemData_t _system_data;
             KeyData_t _key_data;
 
 
             void _update_rtc_time();
             void _update_imu_data();
+            void _update_sensor_data();
             void _update_power_infos();
 
             void _update_go_sleep();

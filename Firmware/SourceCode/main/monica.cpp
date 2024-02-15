@@ -170,9 +170,7 @@ extern "C" void app_main(void)
     /* Set to same database */
     hardware_manager.setMooncake(&mooncake_ui);
 
-
-
-
+    ESP_LOGI("monica", "setMooncake() database");
 
 
     /* Install Apps */

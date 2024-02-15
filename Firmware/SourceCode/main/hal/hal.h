@@ -17,6 +17,7 @@
 #include "rtc/hal_rtc.hpp"
 #include "sd_card/hal_sd_crad.hpp"
 #include "tp/hal_tp.hpp"
+#include "sensor/bmp280.hpp"
 #include <BMI270.h>
 extern "C" {
 #include "usb_msc/hal_usb_msc.h"
@@ -52,6 +53,8 @@ class HAL {
 
         /* SD card */
         SD_CARD::SD_Card sd;
+
+        BMP280::BMP280 bmp280;
 
         /* Buttons */
         Button btnA = Button(GPIO_NUM_0);

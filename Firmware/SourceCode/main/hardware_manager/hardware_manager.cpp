@@ -74,6 +74,11 @@ namespace HM {
         *_imu_data.steps = imu.getSteps();
     }
 
+    void Hardware_Manager::_update_sensor_data()
+    {
+        /* Read sensor */
+        bmp280.readData(_sensor_data.temperature, _sensor_data.pressure, _sensor_data.humidity);
+    }
 
     void Hardware_Manager::_update_power_infos()
     {
@@ -132,6 +137,7 @@ namespace HM {
             /* Update data at once */
             _update_rtc_time();
             _update_imu_data();
+            _update_sensor_data();
             /* Clear key pwr */
             pmu.isKeyPressed();
 
@@ -213,6 +219,11 @@ namespace HM {
         /* IMU */
         _imu_data.steps = (uint32_t*)getDatabase()->Get(MC_STEPS)->addr;
 
+        /* Sensor */
+        _sensor_data.temperature = (float*)getDatabase()->Get(MC_Temperature)->addr;
+        _sensor_data.pressure = (float*)getDatabase()->Get(MC_Pressure)->addr;
+        _sensor_data.humidity = (float*)getDatabase()->Get(MC_Humidity)->addr;
+
         /* System data */
         _system_data.just_wake_up_ptr = (bool*)getDatabase()->Get(MC_JUST_WAKEUP)->addr;
 
@@ -221,6 +232,7 @@ namespace HM {
         _key_data.key_pwr_ptr = (bool*)getDatabase()->Get(MC_KEY_POWER)->addr;
         _key_data.key_up_ptr = (bool*)getDatabase()->Get(MC_KEY_UP)->addr;
         _key_data.key_down_ptr = (bool*)getDatabase()->Get(MC_KEY_DOWN)->addr;
+        ESP_LOGI(TAG, "database pointers set!");
     }
 
 
@@ -247,6 +259,12 @@ namespace HM {
         if ((esp_timer_get_time() - _imu_data.update_count) > _imu_data.update_interval) {
             _update_imu_data();
             _imu_data.update_count = esp_timer_get_time();
+        }
+
+        /* Update BMP280 */
+        if ((esp_timer_get_time() - _sensor_data.update_count) > _sensor_data.update_interval) {
+            _update_sensor_data();
+            _sensor_data.update_count = esp_timer_get_time();
         }
 
         /* Update keys */

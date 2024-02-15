@@ -6,6 +6,17 @@
 
 ![](https://github.com/Forairaaaaa/monica/blob/main/Pics/cover.JPG?raw=true)
 
+### I2C
+['0x34', 0x38, '0x51', '0x68', '0x77']
+
+|   I2C 7位地址  | IC  | 备注 |
+| :----: | :----: | :----: |
+| 0x34 | AXP2101 | 电源管理 |
+| 0x38 | FT3168 | 需要禁用 monitor 模式 |
+| 0x51 | PCF8563 | RTC |
+| 0x68 | MPU | 运动传感器 |
+| 0x77 | BMP280 | (0x76) |
+
 ### 原理图
 
 ![](https://github.com/Forairaaaaa/monica/blob/main/Pics/hardware1.png?raw=true)
