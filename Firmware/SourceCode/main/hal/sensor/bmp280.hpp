@@ -53,7 +53,7 @@ namespace BMP280
              * sdkconfig for ESP8266, which is enabled by default for this
              * example. see sdkconfig.defaults.esp8266
              */
-            printf("Pressure: %.2f Pa, Temperature: %.2f C, Humidity: %.2f\n", *pressure, *temperature, *humidity);
+            // printf("Pressure: %.2f Pa, Temperature: %.2f C, Humidity: %.2f\n", *pressure, *temperature, *humidity);
         }
     };
 }
