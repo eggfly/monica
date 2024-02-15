@@ -97,7 +97,6 @@ static lv_res_t decoder_info(struct _lv_img_decoder_t * decoder, const void * sr
             header->w = (lv_coord_t)((size[0] & 0xff000000) >> 24) + ((size[0] & 0x00ff0000) >> 8);
             header->h = (lv_coord_t)((size[1] & 0xff000000) >> 24) + ((size[1] & 0x00ff0000) >> 8);
 
-            ESP_LOGE("lv_png", "header: w=%d, h=%d", header->w, header->h);
             return LV_RES_OK;
         }
     }
