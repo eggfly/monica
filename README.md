@@ -17,6 +17,9 @@
 | 0x68 | MPU | 运动传感器 |
 | 0x77 | BMP280 | (0x76) |
 
+* icons:
+* https://www.freepik.com/author/freepik/icons/flat-circular-flat_9?t=f
+
 ### 原理图
 
 ![](https://github.com/Forairaaaaa/monica/blob/main/Pics/hardware1.png?raw=true)

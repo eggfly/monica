@@ -45,4 +45,4 @@
 #define HAL_PIN_SD_D2       48
 #define HAL_PIN_SD_D3       21
 
-#define BRIGHTNESS          100
+#define BRIGHTNESS          64

@@ -10,3 +10,6 @@
  */
 #pragma once
 
+#include "image_viewer/image_viewer.h"
+#include "black_watch_face/watch_face.h"
+

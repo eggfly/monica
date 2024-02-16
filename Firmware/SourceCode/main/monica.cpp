@@ -164,6 +164,9 @@ extern "C" void app_main(void)
     // /* UI framwork init */
     mooncake_ui.setDisplay(hardware_manager.disp.width(), hardware_manager.disp.height());
     mooncake_ui.init();
+    UserApps::BlackWatch *blackWatchFace = new UserApps::BlackWatch;
+    mooncake_ui.install(blackWatchFace);
+    
     mooncake_ui.installBuiltinApps();
 
 
@@ -175,14 +178,14 @@ extern "C" void app_main(void)
 
     /* Install Apps */
     MOONCAKE::APP_BASE* app_ptr = nullptr;
-
     
     app_ptr = new AppTest("333", (void*)&ui_img_app_icon_hdpi_boxing_png);
     mooncake_ui.install(app_ptr);
     app_ptr = new AppTest("444", (void*)&ui_img_app_icon_hdpi_camera_png);
     mooncake_ui.install(app_ptr);
     // app_ptr = new AppTest("555", (void*)&ui_img_app_icon_hdpi_canvas_png);
-    // mooncake_ui.install(app_ptr);
+    UserApps::Sketchpad *testPad = new UserApps::Sketchpad;
+    mooncake_ui.install(testPad);
     app_ptr = new AppTest("111", (void*)&ui_img_app_icon_hdpi_badminton_png);
     mooncake_ui.install(app_ptr);
     app_ptr = new AppTest("222", (void*)&ui_img_app_icon_hdpi_birdhead_png);
