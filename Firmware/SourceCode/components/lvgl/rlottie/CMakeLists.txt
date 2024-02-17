@@ -70,6 +70,10 @@ else()
                             -Wnon-virtual-dtor
                             -Woverloaded-virtual
                             -Wno-unused-parameter
+                            -Wno-unused-value
+                            -Wno-unused-variable
+                            -Wunused-value
+                            -Wunused-variable
                         )
 endif()
 

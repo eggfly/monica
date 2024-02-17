@@ -3808,7 +3808,7 @@ static int stbi__jpeg_info(stbi__context *s, int *x, int *y, int *comp)
    int result;
    stbi__jpeg* j = (stbi__jpeg*) (stbi__malloc(sizeof(stbi__jpeg)));
    if (!j) {
-      stbi__errpuc("outofmem", "Out of memory");
+      // stbi__errpuc("outofmem", "Out of memory");
       return 0;
    }
    j->s = s;

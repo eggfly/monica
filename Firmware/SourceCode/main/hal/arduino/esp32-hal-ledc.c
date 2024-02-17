@@ -31,8 +31,11 @@
 #define LEDC_DEFAULT_CLK        LEDC_AUTO_CLK
 #endif
 
+#if ESP_IDF_VERSION > ESP_IDF_VERSION_VAL(5, 0, 2)
+#define LEDC_MAX_BIT_WIDTH      SOC_LEDC_TIMER_BIT_WIDTH
+#else
 #define LEDC_MAX_BIT_WIDTH      SOC_LEDC_TIMER_BIT_WIDE_NUM
-
+#endif
 
 typedef struct {
     int used_channels : LEDC_CHANNELS;              // Used channels as a bits

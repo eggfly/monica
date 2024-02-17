@@ -9,6 +9,7 @@
 #include "../../../lvgl.h"
 #if LV_USE_BMP
 
+#include <esp_log.h>
 #include <string.h>
 
 /*********************
@@ -91,6 +92,7 @@ static lv_res_t decoder_info(lv_img_decoder_t * decoder, const void * src, lv_im
             uint32_t h;
             memcpy(&w, headers + 18, 4);
             memcpy(&h, headers + 22, 4);
+            ESP_LOGE("bmp", "w,h=%lu,%lu", w, h);
             header->w = w;
             header->h = h;
             header->always_zero = 0;
@@ -153,6 +155,7 @@ static lv_res_t decoder_open(lv_img_decoder_t * decoder, lv_img_decoder_dsc_t * 
         memcpy(&b.bpp, header + 28, 2);
         b.row_size_bytes = ((b.bpp * b.px_width + 31) / 32) * 4;
 
+        ESP_LOGE("bmp", "decoder_open w,h=%d,%d", b.px_width, b.px_height);
         bool color_depth_error = false;
         if(LV_COLOR_DEPTH == 32 && (b.bpp != 32 && b.bpp != 24)) {
             LV_LOG_WARN("LV_COLOR_DEPTH == 32 but bpp is %d (should be 32 or 24)", b.bpp);

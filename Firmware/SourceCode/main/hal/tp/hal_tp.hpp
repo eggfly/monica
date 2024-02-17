@@ -27,7 +27,7 @@ namespace FT3168 {
         int pin_int     = -1;
         bool pull_up_en = false;
 
-        i2c_port_t i2c_port = 0;
+        i2c_port_t i2c_port = (i2c_port_t)0;
         uint32_t clk_speed = 100000;
 
         uint8_t dev_addr = 0x38;

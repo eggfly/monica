@@ -33,7 +33,7 @@ namespace BMP280
             bmp280_init_default_params(&params);
             memset(&_dev, 0, sizeof(bmp280_t));
 
-            ESP_ERROR_CHECK(bmp280_init_desc(&_dev, BMP280_I2C_ADDRESS_1, 0, GPIO_NUM_11, GPIO_NUM_10));
+            ESP_ERROR_CHECK(bmp280_init_desc(&_dev, BMP280_I2C_ADDRESS_1, (i2c_port_t)0, GPIO_NUM_11, GPIO_NUM_10));
             ESP_ERROR_CHECK(bmp280_init(&_dev, &params));
         }
 

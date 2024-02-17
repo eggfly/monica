@@ -311,6 +311,9 @@ namespace lgfx
         buscfg.max_transfer_sz = 1;
         buscfg.flags = SPICOMMON_BUSFLAG_MASTER;
         buscfg.intr_flags = 0;
+        #if ESP_IDF_VERSION > ESP_IDF_VERSION_VAL(5, 0, 2)
+        buscfg.isr_cpu_id = INTR_CPU_ID_1; // INTR_CPU_ID_AUTO
+        #endif
 
         if (ESP_OK != spi_bus_initialize(static_cast<spi_host_device_t>(spi_host), &buscfg, dma_channel))
         {
@@ -393,6 +396,9 @@ namespace lgfx
         buscfg.max_transfer_sz = 1;
         buscfg.flags = SPICOMMON_BUSFLAG_MASTER | SPICOMMON_BUSFLAG_QUAD;
         buscfg.intr_flags = 0;
+        #if ESP_IDF_VERSION > ESP_IDF_VERSION_VAL(5, 0, 2)
+        buscfg.isr_cpu_id = INTR_CPU_ID_1; // INTR_CPU_ID_AUTO
+        #endif
 
         if (ESP_OK != spi_bus_initialize(static_cast<spi_host_device_t>(spi_host), &buscfg, dma_channel))
         {
@@ -725,7 +731,11 @@ namespace lgfx
         cmd_val |= (1 << 10); // ACK_VALUE (set NACK)
       }
 #if defined (CONFIG_IDF_TARGET_ESP32S3)
+  #if ESP_IDF_VERSION > ESP_IDF_VERSION_VAL(5, 0, 2)
+      dev->comd[index].val = cmd_val;
+    #else
       (&dev->comd0)[index].val = cmd_val;
+  #endif
 #else
       dev->command[index].val = cmd_val;
 #endif

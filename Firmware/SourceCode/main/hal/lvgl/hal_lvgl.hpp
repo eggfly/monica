@@ -16,6 +16,17 @@
 
 #include "lv_demos.h"
 
+#include <stdio.h>
+#include <string.h>
+#include <sys/unistd.h>
+#include <sys/stat.h>
+#include "esp_err.h"
+#include "esp_log.h"
+#include "esp_spiffs.h"
+
+#include "esp_partition.h"
+#include "../../../components/mooncake/src/builtin_apps/assets/icon/anim/icon_anim.h"
+
 // static inline uint32_t micros_start() __attribute__ ((always_inline));
 // static inline uint32_t micros_start()
 // {
@@ -24,6 +35,11 @@
 //     ;
 //   return micros();
 // }
+
+extern "C" {
+    void spi_flash_mmap_dump(void);
+}
+
 
 namespace LVGL
 {
@@ -73,17 +89,19 @@ namespace LVGL
             }
         }
 
-        inline void lv_fs_spiffs_init()
-        {
-            ESP_LOGI(TAG, "lv_fs_spiffs_init()");
-        }
-
         inline void _lv_port_disp_init()
         {
             static lv_disp_draw_buf_t draw_buf_dsc_3;
-            lv_color_t *buf_3_1 = (lv_color_t *)heap_caps_malloc(_disp->width() * _disp->height() * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
-            lv_color_t *buf_3_2 = (lv_color_t *)heap_caps_malloc(_disp->width() * _disp->height() * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
+            lv_color_t *buf_3_1;
+            lv_color_t *buf_3_2;
 
+#if CONFIG_SPIRAM_USE_MALLOC
+            buf_3_1 = (lv_color_t *)malloc(_disp->width() * _disp->height() * sizeof(lv_color_t));
+            buf_3_2 = (lv_color_t *)malloc(_disp->width() * _disp->height() * sizeof(lv_color_t));
+#else
+            buf_3_1 = (lv_color_t *)heap_caps_malloc(_disp->width() * _disp->height() * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
+            buf_3_2 = (lv_color_t *)heap_caps_malloc(_disp->width() * _disp->height() * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
+#endif
             /* If failed */
             if ((buf_3_1 == NULL) || (buf_3_2 == NULL))
             {
@@ -188,6 +206,162 @@ namespace LVGL
                 tft.drawFastVLine(x, 0, h, color2);
         }
 
+        inline void dump_memory(const void *addr, size_t offset, int size)
+        {
+            unsigned char *ptr = (unsigned char *)addr;
+            ptr += offset;
+            for (int i = 0; i < size; i++)
+            {
+                printf("%p: %02x\n", ptr + i, *(ptr + i));
+            }
+        }
+
+        inline void init_partition_mmap()
+        {
+            const esp_partition_t *part = esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_ANY, "spring_wreath");
+            if (part != NULL)
+            {
+                ESP_LOGI(TAG, "found partition '%s' at offset 0x%" PRIx32 " with size 0x%" PRIx32, part->label, part->address, part->size);
+                spi_flash_mmap_dump();
+                static esp_partition_mmap_handle_t map_handle;
+                const void *map_ptr;
+                ESP_ERROR_CHECK(esp_partition_mmap(part, 0, part->size, ESP_PARTITION_MMAP_DATA, &map_ptr, &map_handle));
+                ESP_LOGI(TAG, "Mapped partition to data memory address %p", map_ptr);
+                spi_flash_mmap_dump();
+                init_anim_spring_wreath_dsc(map_ptr);
+                // dump_memory(map_ptr, 0x27198, 16);
+            }
+            else
+            {
+                ESP_LOGE(TAG, "\tpartition not found!");
+            }
+        }
+
+        inline void spiffs_init(const char *path, const char *partition_name)
+        {
+            ESP_LOGI(TAG, "Initializing SPIFFS: %s -> %s", partition_name, path);
+            esp_vfs_spiffs_conf_t conf = {
+                .base_path = path,
+                .partition_label = partition_name,
+                .max_files = 5,
+                .format_if_mount_failed = true};
+
+            // Use settings defined above to initialize and mount SPIFFS filesystem.
+            // Note: esp_vfs_spiffs_register is an all-in-one convenience function.
+            esp_err_t ret = esp_vfs_spiffs_register(&conf);
+
+            if (ret != ESP_OK)
+            {
+                if (ret == ESP_FAIL)
+                {
+                    ESP_LOGE(TAG, "Failed to mount or format filesystem");
+                }
+                else if (ret == ESP_ERR_NOT_FOUND)
+                {
+                    ESP_LOGE(TAG, "Failed to find SPIFFS partition");
+                }
+                else
+                {
+                    ESP_LOGE(TAG, "Failed to initialize SPIFFS (%s)", esp_err_to_name(ret));
+                }
+                return;
+            }
+
+#ifdef CONFIG_EXAMPLE_SPIFFS_CHECK_ON_START
+            ESP_LOGI(TAG, "Performing SPIFFS_check().");
+            ret = esp_spiffs_check(conf.partition_label);
+            if (ret != ESP_OK)
+            {
+                ESP_LOGE(TAG, "SPIFFS_check() failed (%s)", esp_err_to_name(ret));
+                return;
+            }
+            else
+            {
+                ESP_LOGI(TAG, "SPIFFS_check() successful");
+            }
+#endif
+
+            size_t total = 0, used = 0;
+            ret = esp_spiffs_info(conf.partition_label, &total, &used);
+            if (ret != ESP_OK)
+            {
+                ESP_LOGE(TAG, "Failed to get SPIFFS partition information (%s). Formatting...", esp_err_to_name(ret));
+                esp_spiffs_format(conf.partition_label);
+                return;
+            }
+            else
+            {
+                ESP_LOGI(TAG, "Partition size: total: %d, used: %d", total, used);
+            }
+
+            // Check consistency of reported partiton size info.
+            if (used > total)
+            {
+                ESP_LOGW(TAG, "Number of used bytes cannot be larger than total. Performing SPIFFS_check().");
+                ret = esp_spiffs_check(conf.partition_label);
+                // Could be also used to mend broken files, to clean unreferenced pages, etc.
+                // More info at https://github.com/pellepl/spiffs/wiki/FAQ#powerlosses-contd-when-should-i-run-spiffs_check
+                if (ret != ESP_OK)
+                {
+                    ESP_LOGE(TAG, "SPIFFS_check() failed (%s)", esp_err_to_name(ret));
+                    return;
+                }
+                else
+                {
+                    ESP_LOGI(TAG, "SPIFFS_check() successful");
+                }
+            }
+
+            ESP_LOGI(TAG, "Opening file");
+            std::string hello_path(path);
+            hello_path += "/hello.txt";
+            FILE *f = fopen(hello_path.c_str(), "w");
+            if (f == NULL)
+            {
+                ESP_LOGE(TAG, "Failed to open file for writing");
+                return;
+            }
+            fprintf(f, "Hello World!\n");
+            fclose(f);
+            ESP_LOGI(TAG, "File written");
+
+            // Check if destination file exists before renaming
+            struct stat st;
+            std::string foo_path(path);
+            foo_path += "/foo.txt";
+            if (stat(foo_path.c_str(), &st) == 0)
+            {
+                // Delete it if it exists
+                unlink(foo_path.c_str());
+            }
+
+            // Rename original file
+            ESP_LOGI(TAG, "Renaming file");
+            if (rename(hello_path.c_str(), foo_path.c_str()) != 0)
+            {
+                ESP_LOGE(TAG, "Rename failed");
+                return;
+            }
+
+            // Open renamed file for reading
+            ESP_LOGI(TAG, "Reading file");
+            f = fopen(foo_path.c_str(), "r");
+            if (f == NULL)
+            {
+                ESP_LOGE(TAG, "Failed to open file for reading");
+                return;
+            }
+            char line[64];
+            fgets(line, sizeof(line), f);
+            fclose(f);
+            // strip newline
+            char *pos = strchr(line, '\n');
+            if (pos)
+            {
+                *pos = '\0';
+            }
+            ESP_LOGI(TAG, "Read from file: '%s'", line);
+        }
         /**
          * @brief Lvgl init
          *
@@ -204,9 +378,11 @@ namespace LVGL
             _tp = tp;
 
             lv_init();
-            lv_fs_spiffs_init();
+            spiffs_init("/spiffs_0", "spiffs_res_0");
+            spiffs_init("/spiffs_1", "spiffs_res_1");
             _lv_port_disp_init();
             _lv_port_indev_init();
+            // init_partition_mmap();
         }
 
         /**

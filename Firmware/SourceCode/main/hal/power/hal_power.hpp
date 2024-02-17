@@ -27,7 +27,7 @@ namespace AXP2101 {
         int pin_scl     = -1;
         int pin_sda     = -1;
         int pin_int     = -1;
-        i2c_port_t i2c_port = 0;
+        i2c_port_t i2c_port = (i2c_port_t)0;
 
         uint8_t dev_addr = 0x34;
     };
