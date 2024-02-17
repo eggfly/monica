@@ -1,4 +1,0 @@
-[submodule "Firmware/SourceCode/components/mooncake"]
-	path = Firmware/SourceCode/components/mooncake
-	url = git@github.com:eggfly/mooncake.git
-	branch = monica
