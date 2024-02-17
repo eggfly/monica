@@ -164,9 +164,10 @@ extern "C" void app_main(void)
     // /* UI framwork init */
     mooncake_ui.setDisplay(hardware_manager.disp.width(), hardware_manager.disp.height());
     mooncake_ui.init();
+    #if ENABLE_LVGL_BLACK_WATCH
     UserApps::BlackWatch *blackWatchFace = new UserApps::BlackWatch;
     mooncake_ui.install(blackWatchFace);
-    
+    #endif
     mooncake_ui.installBuiltinApps();
 
 

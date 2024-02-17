@@ -1,5 +1,6 @@
 output_filename = 'walking.bin'
-input_filenames = ['walking_{}.bin'.format(i) for i in range(27)]
+num = 31
+input_filenames = ['walking_{}.bin'.format(i) for i in range(num)]
 
 with open(output_filename, 'wb') as outfile:
     for input_filename in input_filenames:

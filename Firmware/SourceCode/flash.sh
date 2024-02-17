@@ -6,6 +6,8 @@
 # Configs
 IDF_PATH=$HOME/esp-idf-v5.1.2
 
+# esptool.py  -p /dev/cu.usbmodem1101 write_flash 0x620000 ./spiffs_res_1/spring_wreath.bin 
+# esptool.py  -p /dev/cu.usbmodem1101 write_flash 0x104e000 ./spiffs_res_1/walking.bin 
 
 function do_work() {
     unsetopt nomatch

@@ -65,26 +65,27 @@ static const lv_img_dsc_t *anim_lc_walking[] = {
     &ui_img_icon_lc_walking_10_png,
     &ui_img_icon_lc_walking_11_png,
     &ui_img_icon_lc_walking_12_png,
-    // &ui_img_icon_lc_walking_13_png,
-    // &ui_img_icon_lc_walking_14_png,
-    // &ui_img_icon_lc_walking_15_png,
-    // &ui_img_icon_lc_walking_16_png,
-    // &ui_img_icon_lc_walking_17_png,
-    // &ui_img_icon_lc_walking_18_png,
-    // &ui_img_icon_lc_walking_19_png,
-    // &ui_img_icon_lc_walking_20_png,
-    // &ui_img_icon_lc_walking_21_png,
-    // &ui_img_icon_lc_walking_22_png,
-    // &ui_img_icon_lc_walking_23_png,
-    // &ui_img_icon_lc_walking_24_png,
-    // &ui_img_icon_lc_walking_25_png,
-    // &ui_img_icon_lc_walking_26_png,
-    // &ui_img_icon_lc_walking_27_png,
-    // &ui_img_icon_lc_walking_28_png,
-    // &ui_img_icon_lc_walking_29_png,
-    // &ui_img_icon_lc_walking_30_png,
+    &ui_img_icon_lc_walking_13_png,
+    &ui_img_icon_lc_walking_14_png,
+    &ui_img_icon_lc_walking_15_png,
+    &ui_img_icon_lc_walking_16_png,
+    &ui_img_icon_lc_walking_17_png,
+    &ui_img_icon_lc_walking_18_png,
+    &ui_img_icon_lc_walking_19_png,
+    &ui_img_icon_lc_walking_20_png,
+    &ui_img_icon_lc_walking_21_png,
+    &ui_img_icon_lc_walking_22_png,
+    &ui_img_icon_lc_walking_23_png,
+    &ui_img_icon_lc_walking_24_png,
+    &ui_img_icon_lc_walking_25_png,
+    &ui_img_icon_lc_walking_26_png,
+    &ui_img_icon_lc_walking_27_png,
+    &ui_img_icon_lc_walking_28_png,
+    &ui_img_icon_lc_walking_29_png,
+    &ui_img_icon_lc_walking_30_png,
 };
-#define NUM_ANIM_LC_WALKING 13
+
+#define NUM_ANIM_LC_WALKING 31
 
 LV_IMG_DECLARE(ui_img_anim_spring_wreath_0_png);  // assets\anim_spring_wreath_0.png
 LV_IMG_DECLARE(ui_img_anim_spring_wreath_1_png);  // assets\anim_spring_wreath_1.png
@@ -115,40 +116,52 @@ LV_IMG_DECLARE(ui_img_anim_spring_wreath_8_png);  // assets\anim_spring_wreath_8
 LV_IMG_DECLARE(ui_img_anim_spring_wreath_9_png);  // assets\anim_spring_wreath_9.png
 
 static const lv_img_dsc_t *anim_spring_wreath[] = {
-    // &ui_img_anim_spring_wreath_0_png,
+    &ui_img_anim_spring_wreath_0_png,
     &ui_img_anim_spring_wreath_1_png,
-    // &ui_img_anim_spring_wreath_2_png,
-    // &ui_img_anim_spring_wreath_3_png,
-    // &ui_img_anim_spring_wreath_4_png,
-    // &ui_img_anim_spring_wreath_5_png,
-    // &ui_img_anim_spring_wreath_6_png,
-    // &ui_img_anim_spring_wreath_7_png,
-    // &ui_img_anim_spring_wreath_8_png,
-    // &ui_img_anim_spring_wreath_9_png,
-    // &ui_img_anim_spring_wreath_10_png,
-    // &ui_img_anim_spring_wreath_11_png,
-    // &ui_img_anim_spring_wreath_12_png,
-    // &ui_img_anim_spring_wreath_13_png,
-    // &ui_img_anim_spring_wreath_14_png,
-    // &ui_img_anim_spring_wreath_15_png,
-    // &ui_img_anim_spring_wreath_16_png,
-    // &ui_img_anim_spring_wreath_17_png,
-    // &ui_img_anim_spring_wreath_18_png,
-    // &ui_img_anim_spring_wreath_19_png,
-    // &ui_img_anim_spring_wreath_20_png,
-    // &ui_img_anim_spring_wreath_21_png,
-    // &ui_img_anim_spring_wreath_22_png,
-    // &ui_img_anim_spring_wreath_23_png,
-    // &ui_img_anim_spring_wreath_24_png,
-    // &ui_img_anim_spring_wreath_25_png,
-    // &ui_img_anim_spring_wreath_26_png,
+#if SPEED_UP_FLASH_WHILE_DEV != 0
+    &ui_img_anim_spring_wreath_2_png,
+    &ui_img_anim_spring_wreath_3_png,
+    &ui_img_anim_spring_wreath_4_png,
+    &ui_img_anim_spring_wreath_5_png,
+    &ui_img_anim_spring_wreath_6_png,
+    &ui_img_anim_spring_wreath_7_png,
+    &ui_img_anim_spring_wreath_8_png,
+    &ui_img_anim_spring_wreath_9_png,
+    &ui_img_anim_spring_wreath_10_png,
+    &ui_img_anim_spring_wreath_11_png,
+    &ui_img_anim_spring_wreath_12_png,
+    &ui_img_anim_spring_wreath_13_png,
+    &ui_img_anim_spring_wreath_14_png,
+    &ui_img_anim_spring_wreath_15_png,
+    &ui_img_anim_spring_wreath_16_png,
+    &ui_img_anim_spring_wreath_17_png,
+    &ui_img_anim_spring_wreath_18_png,
+    &ui_img_anim_spring_wreath_19_png,
+    &ui_img_anim_spring_wreath_20_png,
+    &ui_img_anim_spring_wreath_21_png,
+    &ui_img_anim_spring_wreath_22_png,
+    &ui_img_anim_spring_wreath_23_png,
+    &ui_img_anim_spring_wreath_24_png,
+    &ui_img_anim_spring_wreath_25_png,
+    &ui_img_anim_spring_wreath_26_png,
+#endif
 };
+
 // eggfly
+#if SPEED_UP_FLASH_WHILE_DEV
+#define NUM_ANIM_SPRING_WREATH 2
+#else 
 #define NUM_ANIM_SPRING_WREATH 27
+#endif
 
 extern lv_img_dsc_t anim_spring_wreath_raw[NUM_ANIM_SPRING_WREATH];
 
+extern lv_img_dsc_t anim_lc_walking_raw[NUM_ANIM_LC_WALKING];
+extern lv_img_dsc_t *anim_lc_walking_ptrs[NUM_ANIM_LC_WALKING];
+
 void init_anim_spring_wreath_dsc(const void * addr);
+
+void init_anim_lc_walking_dsc_and_ptrs(const void * addr);
 
 #ifdef __cplusplus
 }

@@ -46,3 +46,6 @@
 #define HAL_PIN_SD_D3       21
 
 #define BRIGHTNESS          64
+
+#define ENABLE_LVGL_BLACK_WATCH     0
+#define SPEED_UP_FLASH_WHILE_DEV    1

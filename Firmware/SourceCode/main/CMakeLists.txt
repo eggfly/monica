@@ -32,3 +32,11 @@ idf_component_register(SRCS "monica.cpp" ${HAL_SRCS} ${USER_APPS_SRCS} ${HM_SRCS
 
 # spiffs_create_partition_image(spiffs_res_0 ../spiffs_res_0 FLASH_IN_PROJECT)
 # spiffs_create_partition_image(spiffs_res_1 ../spiffs_res_1 FLASH_IN_PROJECT)
+
+# eggfly mod
+# set(image1_file ${CMAKE_BINARY_DIR}/../spiffs_res_1/spring_wreath.bin)
+# esptool_py_flash_to_partition(flash "spring_wreath" "${image1_file}")
+
+# set(image2_file ${CMAKE_BINARY_DIR}/../spiffs_res_1/walking.bin)
+# esptool_py_flash_to_partition(flash "walking" "${image2_file}")
+

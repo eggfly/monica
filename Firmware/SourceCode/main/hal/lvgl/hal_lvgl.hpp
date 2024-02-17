@@ -216,9 +216,8 @@ namespace LVGL
             }
         }
 
-        inline void init_partition_mmap()
-        {
-            const esp_partition_t *part = esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_ANY, "spring_wreath");
+        inline const void * map_partition(const char * partition_name) {
+            const esp_partition_t *part = esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_ANY, partition_name);
             if (part != NULL)
             {
                 ESP_LOGI(TAG, "found partition '%s' at offset 0x%" PRIx32 " with size 0x%" PRIx32, part->label, part->address, part->size);
@@ -228,13 +227,25 @@ namespace LVGL
                 ESP_ERROR_CHECK(esp_partition_mmap(part, 0, part->size, ESP_PARTITION_MMAP_DATA, &map_ptr, &map_handle));
                 ESP_LOGI(TAG, "Mapped partition to data memory address %p", map_ptr);
                 spi_flash_mmap_dump();
-                init_anim_spring_wreath_dsc(map_ptr);
-                // dump_memory(map_ptr, 0x27198, 16);
+                return map_ptr;
             }
             else
             {
                 ESP_LOGE(TAG, "\tpartition not found!");
+                return nullptr;
             }
+        }
+
+        inline void init_partition_mmap()
+        {
+            // const void * map_ptr1 = map_partition("spring_wreath");
+            // if (map_ptr1) {
+            //     init_anim_spring_wreath_dsc(map_ptr1);
+            // }
+            // const void * map_ptr2 = map_partition("walking");
+            // if (map_ptr2) {
+            //     init_anim_lc_walking_dsc_and_ptrs(map_ptr2);
+            // }
         }
 
         inline void spiffs_init(const char *path, const char *partition_name)

@@ -74,7 +74,7 @@ namespace MOONCAKE {
                 // }
 
                 // lv_img_set_src(_anim._img, "A:sdcard/boot_anim/background.png");
-                ESP_LOGE("spring", "lv_img_set_src, index=%d", _anim._index);
+                // ESP_LOGE("spring", "lv_img_set_src, index=%d", _anim._index);
                 /* Next frame */
                 _anim._index++;
                 if (_anim._index > (NUM_ANIM_SPRING_WREATH - 1)) {
@@ -123,7 +123,7 @@ namespace MOONCAKE {
                 path += ".png";
                 lv_img_set_src(_anim._img, path.c_str());
             } else {
-                lv_img_set_src(_anim._img, &anim_spring_wreath_raw[index]);
+                lv_img_set_src(_anim._img, anim_spring_wreath[index]);
             }
         }
 
