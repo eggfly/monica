@@ -19,6 +19,7 @@
 
 * icons:
 * https://www.freepik.com/author/freepik/icons/flat-circular-flat_9?t=f
+* https://lottiefiles.com/animations/a-botanical-wreath-loading-CJUS86nLib
 
 ### 原理图
 

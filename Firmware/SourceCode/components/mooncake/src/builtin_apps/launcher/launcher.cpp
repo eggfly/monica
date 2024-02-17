@@ -19,6 +19,50 @@
 #define ICON_ZOOM_LIMIT     32
 #define PLAY_WALKING_ANIM   1
 
+#include <stdio.h>
+#include <sys/unistd.h>
+#include <sys/stat.h>
+#include "esp_err.h"
+#include "esp_log.h"
+
+static const char *TAG = "SDCard_Speed_Test";
+
+void sdcard_speed_test(const char *file_path) {
+    FILE *file = fopen(file_path, "r");
+    if (file == NULL) {
+        ESP_LOGE(TAG, "Failed to open file for reading");
+        return;
+    }
+
+    struct stat st;
+    if (stat(file_path, &st) != 0) {
+        ESP_LOGE(TAG, "Failed to get file size");
+        fclose(file);
+        return;
+    }
+
+    size_t file_size = st.st_size;
+    char *buffer = (char *)malloc(file_size);
+    if (buffer == NULL) {
+        ESP_LOGE(TAG, "Failed to allocate memory for buffer");
+        fclose(file);
+        return;
+    }
+    ESP_LOGI(TAG, "Prepare Read bytes from file");
+
+    size_t bytes_read = fread(buffer, 1, file_size, file);
+    if (bytes_read != file_size) {
+        ESP_LOGE(TAG, "Failed to read file");
+        free(buffer);
+        fclose(file);
+        return;
+    }
+
+    ESP_LOGI(TAG, "Read %d bytes from file", bytes_read);
+
+    free(buffer);
+    fclose(file);
+}
 
 namespace MOONCAKE {
     namespace BUILTIN_APP {
@@ -483,6 +527,8 @@ namespace MOONCAKE {
         void Launcher::onCreate()
         {
             printf("[%s] onCreate\n", getAppName().c_str());
+
+            sdcard_speed_test("/sdcard/spiffs_res_1/spring_wreath_2.bin");
 
             /* Get hardware infos from database */
             _data.dispHor = (int16_t*)getDatabase()->Get(MC_DISP_HOR)->addr;
