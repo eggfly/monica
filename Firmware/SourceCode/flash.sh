@@ -4,7 +4,7 @@
 
 
 # Configs
-IDF_PATH=$HOME/esp-idf-v5.0.2
+IDF_PATH=$HOME/esp-idf-v5.1.2
 
 
 function do_work() {

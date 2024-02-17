@@ -380,9 +380,9 @@ namespace LVGL
             lv_init();
             spiffs_init("/spiffs_0", "spiffs_res_0");
             spiffs_init("/spiffs_1", "spiffs_res_1");
+            init_partition_mmap();
             _lv_port_disp_init();
             _lv_port_indev_init();
-            // init_partition_mmap();
         }
 
         /**
