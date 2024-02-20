@@ -21,7 +21,7 @@ namespace MOONCAKE {
 
         struct LauncherConfig_t {
             void* backGroundImg = nullptr;
-            lv_color_t backGroundColor = lv_color_hex(0x000000);
+            lv_color_t backGroundColor = lv_color_hex(0x404040);
             uint32_t infoUpdateInterval = 100;
         };
 
@@ -120,7 +120,7 @@ namespace MOONCAKE {
             lv_obj_t* screenMain = nullptr;
             lv_obj_t* screenCanvas = nullptr;
             lv_color_t* canvasBuffer = nullptr;
-            lv_draw_img_dsc_t iconDsc;
+            lv_draw_image_dsc_t iconDsc;
         };
 
     }

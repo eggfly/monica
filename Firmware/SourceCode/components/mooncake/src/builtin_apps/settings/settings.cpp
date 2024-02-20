@@ -126,7 +126,7 @@ namespace MOONCAKE {
 
             /* Create screen */
             _data.screen = lv_obj_create(NULL);
-            lv_scr_load_anim(_data.screen, LV_SCR_LOAD_ANIM_FADE_IN, 50, 0, false);
+            lv_screen_load_anim(_data.screen, LV_SCR_LOAD_ANIM_FADE_IN, 50, 0, false);
             /* Set background color */
             lv_obj_set_style_bg_color(_data.screen, lv_color_hex(0x000000), LV_STATE_DEFAULT);
             /* Add event callback */

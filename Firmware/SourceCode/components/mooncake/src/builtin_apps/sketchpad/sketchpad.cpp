@@ -60,7 +60,7 @@ namespace MOONCAKE {
             lv_obj_set_style_radius(btn, LV_RADIUS_CIRCLE, 0);
             lv_obj_add_event_cb(btn, color_changer_event_cb, LV_EVENT_ALL, color_cont);
             lv_obj_set_style_shadow_width(btn, 0, 0);
-            lv_obj_set_style_bg_img_src(btn, LV_SYMBOL_TINT, 0);
+            lv_obj_set_style_bg_image_src(btn, LV_SYMBOL_TINT, 0);
 
             lv_obj_set_size(btn, LV_DPX(50), LV_DPX(50));
             lv_obj_align(btn, LV_ALIGN_BOTTOM_RIGHT, -LV_DPX(15), -LV_DPX(15));
@@ -116,7 +116,7 @@ namespace MOONCAKE {
         void Sketchpad::color_event_cb(lv_event_t * e)
         {
             lv_event_code_t code = lv_event_get_code(e);
-            lv_obj_t* scr = lv_obj_get_screen(lv_event_get_target(e));
+            lv_obj_t* scr = lv_obj_get_screen((lv_obj_t *)lv_event_get_target(e));
             Sketchpad* app = (Sketchpad*)lv_obj_get_user_data(scr);
 
             if(code == LV_EVENT_CLICKED) {
@@ -165,7 +165,17 @@ namespace MOONCAKE {
             rect.radius = LV_RADIUS_CIRCLE;
             rect.bg_color = _data.pen_color;
             // eggfly
-            lv_canvas_draw_rect(_data.canvas, _data.touchPoint.x, _data.touchPoint.y, _data.pen_size, _data.pen_size, &rect);
+            lv_layer_t layer;
+            lv_canvas_init_layer(_data.canvas, &layer);
+
+            lv_area_t area;
+            area.x1 = _data.touchPoint.x - _data.pen_size;
+            area.x2 = _data.touchPoint.x + _data.pen_size;
+            area.y1 = _data.touchPoint.y - _data.pen_size;
+            area.y2 = _data.touchPoint.y + _data.pen_size;
+
+            lv_draw_rect(&layer,  &rect, &area);
+            lv_canvas_finish_layer(_data.canvas, &layer);
         }
 
 
@@ -198,7 +208,7 @@ namespace MOONCAKE {
 
             /* Create screen */
             _data.screen = lv_obj_create(NULL);
-            lv_scr_load_anim(_data.screen, LV_SCR_LOAD_ANIM_FADE_IN, 50, 0, false);
+            lv_screen_load_anim(_data.screen, LV_SCR_LOAD_ANIM_FADE_IN, 50, 0, false);
             /* Set background color */
             lv_obj_set_style_bg_color(_data.screen, lv_color_hex(0x000000), LV_STATE_DEFAULT);
             /* Add event callback */
@@ -208,13 +218,14 @@ namespace MOONCAKE {
 
 
             /* Create canvas buffer */
+            const size_t buffer_size = LV_CANVAS_BUF_SIZE(lv_obj_get_width(_data.screen), lv_obj_get_height(_data.screen), LV_COLOR_DEPTH, LV_DRAW_BUF_STRIDE_ALIGN);
             // static lv_color_t cbuf[LV_CANVAS_BUF_SIZE_TRUE_COLOR(CANVAS_WIDTH, CANVAS_HEIGHT)];
-            _data.canvas_buffer = new lv_color_t[LV_CANVAS_BUF_SIZE_TRUE_COLOR(lv_obj_get_width(_data.screen), lv_obj_get_height(_data.screen))];
-            printf("[%s] alloc buffer %d x %d\n", getAppName().c_str(), lv_obj_get_width(_data.screen), lv_obj_get_height(_data.screen));
+            _data.canvas_buffer = malloc(buffer_size);
+            printf("[%s] alloc buffer %ld x %ld\n", getAppName().c_str(), lv_obj_get_width(_data.screen), lv_obj_get_height(_data.screen));
 
             /*Create a canvas and initialize its palette*/
             _data.canvas = lv_canvas_create(_data.screen);
-            lv_canvas_set_buffer(_data.canvas, _data.canvas_buffer, lv_obj_get_width(_data.screen), lv_obj_get_height(_data.screen), LV_IMG_CF_TRUE_COLOR);
+            lv_canvas_set_buffer(_data.canvas, _data.canvas_buffer, lv_obj_get_width(_data.screen), lv_obj_get_height(_data.screen), LV_COLOR_FORMAT_RGB565);
             lv_obj_center(_data.canvas);
             lv_canvas_fill_bg(_data.canvas, lv_color_hex(0x000000), LV_OPA_COVER);
 
@@ -261,7 +272,7 @@ namespace MOONCAKE {
             
             /* Free buffer */
             /* Stop lvgl using that buffer before freeing */
-            lv_canvas_set_buffer(_data.canvas, _data.canvas_buffer, 0, 0, LV_IMG_CF_TRUE_COLOR);
+            lv_canvas_set_buffer(_data.canvas, _data.canvas_buffer, 0, 0, LV_COLOR_FORMAT_RGB565);
             delete [] _data.canvas_buffer;
         }
 

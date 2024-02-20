@@ -80,7 +80,7 @@ namespace MOONCAKE {
                 /* Get framework pointer */
                 Framework* framework = (Framework*)lv_event_get_user_data(e);
                 /* Get App pointer */
-                APP_BASE* app = (APP_BASE*)lv_obj_get_user_data(lv_event_get_target(e));
+                APP_BASE* app = (APP_BASE*)lv_obj_get_user_data((lv_obj_t *)lv_event_get_target(e));
                 /* Start App */
                 framework->startApp(app);
             }
@@ -88,17 +88,17 @@ namespace MOONCAKE {
             /* Pressed feedback */
             else if (code == LV_EVENT_PRESSED) {
                 /* If pressed, smaller Icon */
-                lv_img_set_zoom(lv_event_get_target(e), lv_img_get_zoom(lv_event_get_target(e)) - 10);
+                lv_img_set_zoom((lv_obj_t *)lv_event_get_target(e), lv_img_get_zoom((lv_obj_t *)lv_event_get_target(e)) - 10);
             }
             else if (code == LV_EVENT_RELEASED) {
                 /* If released, set it back */
-                lv_img_set_zoom(lv_event_get_target(e), lv_img_get_zoom(lv_event_get_target(e)) + 10);
+                lv_img_set_zoom((lv_obj_t *)lv_event_get_target(e), lv_img_get_zoom((lv_obj_t *)lv_event_get_target(e)) + 10);
             }
 
             /* App infos */
             else if (code == LV_EVENT_LONG_PRESSED) {
                 /* Get App pointer */
-                APP_BASE* app = (APP_BASE*)lv_obj_get_user_data(lv_event_get_target(e));
+                APP_BASE* app = (APP_BASE*)lv_obj_get_user_data((lv_obj_t *)lv_event_get_target(e));
                 // printf("%s\n", app->getAppName().c_str());
 
                 /* Draw a message box to show App infos */
@@ -111,7 +111,10 @@ namespace MOONCAKE {
                 else {
                     app_infos += "No";
                 }
-                lv_obj_t * mbox1 = lv_msgbox_create(NULL, app->getAppName().c_str(), app_infos.c_str(), btns, true);
+                lv_obj_t * mbox1 = lv_msgbox_create(NULL);
+                lv_msgbox_add_title(mbox1, app->getAppName().c_str());
+                lv_msgbox_add_text(mbox1, app_infos.c_str());
+                lv_msgbox_add_close_button(mbox1);
                 lv_obj_center(mbox1);
             }
 
@@ -583,7 +586,7 @@ namespace MOONCAKE {
             lv_obj_set_style_bg_color(_data.screenMain, _config.backGroundColor, LV_STATE_DEFAULT);
             /* Set backgound img */
             if (_config.backGroundImg != nullptr) {
-                lv_obj_set_style_bg_img_src(_data.screenMain, _config.backGroundImg, 0);
+                lv_obj_set_style_bg_image_src(_data.screenMain, _config.backGroundImg, 0);
             }
 
 
@@ -627,7 +630,7 @@ namespace MOONCAKE {
             
             /* Load main screen and delete last one */
             if (lv_scr_act() != _data.screenMain) {
-                lv_scr_load_anim(_data.screenMain, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 50, 0, true);
+                lv_screen_load_anim(_data.screenMain, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 50, 0, true);
             }
 
         }

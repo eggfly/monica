@@ -17,10 +17,12 @@ void init_anim_spring_wreath_dsc(const void *addr)
     uint8_t *offset = (uint8_t *)addr;
     for (uint16_t i = 0; i < NUM_ANIM_SPRING_WREATH; i++)
     {
-        anim_spring_wreath_raw[i].header.always_zero = 0;
+        anim_spring_wreath_raw[i].header.magic = LV_IMAGE_HEADER_MAGIC;
+        anim_spring_wreath_raw[i].header.flags = 0;
         anim_spring_wreath_raw[i].header.w = 366;
         anim_spring_wreath_raw[i].header.h = 360;
-        anim_spring_wreath_raw[i].header.cf = LV_IMG_CF_TRUE_COLOR_ALPHA;
+        anim_spring_wreath_raw[i].header.stride = 366 * 2;
+        anim_spring_wreath_raw[i].header.cf = LV_COLOR_FORMAT_RGB565A8;
         anim_spring_wreath_raw[i].data_size = SPRING_WREATH_SIZE;
         anim_spring_wreath_raw[i].data = offset + i * SPRING_WREATH_SIZE;
     }
@@ -31,10 +33,12 @@ void init_anim_lc_walking_dsc_and_ptrs(const void *addr)
     uint8_t *offset = (uint8_t *)addr;
     for (uint16_t i = 0; i < NUM_ANIM_LC_WALKING; i++)
     {
-        anim_lc_walking_raw[i].header.always_zero = 0;
+        anim_lc_walking_raw[i].header.magic = LV_IMAGE_HEADER_MAGIC;
+        anim_lc_walking_raw[i].header.flags = 0;
         anim_lc_walking_raw[i].header.w = 102;
         anim_lc_walking_raw[i].header.h = 147;
-        anim_lc_walking_raw[i].header.cf = LV_IMG_CF_TRUE_COLOR_ALPHA;
+        anim_lc_walking_raw[i].header.stride = 102 * 2;
+        anim_lc_walking_raw[i].header.cf = LV_COLOR_FORMAT_RGB565A8;
         anim_lc_walking_raw[i].data_size = WALKING_SIZE;
         anim_lc_walking_raw[i].data = offset + i * WALKING_SIZE;
         anim_lc_walking_ptrs[i] = &anim_lc_walking_raw[i];

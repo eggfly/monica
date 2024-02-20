@@ -71,7 +71,7 @@ class AppTest : public MOONCAKE::APP_BASE {
 
 
             screen = lv_obj_create(NULL);
-            lv_scr_load_anim(screen, LV_SCR_LOAD_ANIM_MOVE_TOP, 50, 0, false);
+            lv_screen_load_anim(screen, LV_SCR_LOAD_ANIM_MOVE_TOP, 50, 0, false);
             
 
             lv_obj_t * label;
@@ -185,8 +185,8 @@ extern "C" void app_main(void)
     app_ptr = new AppTest("444", (void*)&ui_img_app_icon_hdpi_camera_png);
     mooncake_ui.install(app_ptr);
     // app_ptr = new AppTest("555", (void*)&ui_img_app_icon_hdpi_canvas_png);
-    UserApps::ImageViewer *testPad = new UserApps::ImageViewer;
-    mooncake_ui.install(testPad);
+    // UserApps::ImageViewer *testPad = new UserApps::ImageViewer;
+    // mooncake_ui.install(testPad);
     app_ptr = new AppTest("111", (void*)&ui_img_app_icon_hdpi_badminton_png);
     mooncake_ui.install(app_ptr);
     app_ptr = new AppTest("222", (void*)&ui_img_app_icon_hdpi_birdhead_png);

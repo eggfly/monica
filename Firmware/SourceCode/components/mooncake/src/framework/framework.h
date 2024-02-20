@@ -19,7 +19,7 @@ namespace MOONCAKE {
         SIMPLEKV::SimpleKV* database = nullptr;
         APP_BASE* bootAnim = nullptr;
         APP_BASE* launcher = nullptr;
-        bool playBootAnim = false;
+        bool playBootAnim = true; // eggfly
         bool useLauncher = true;
 
         /* Hardware */

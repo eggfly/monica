@@ -50,7 +50,7 @@ namespace MOONCAKE {
 
             if (code == LV_EVENT_CLICKED) {
 
-                lv_obj_t* roller = (lv_obj_t*)lv_obj_get_user_data(lv_event_get_target(e));
+                lv_obj_t* roller = (lv_obj_t*)lv_obj_get_user_data((lv_obj_t *)lv_event_get_target(e));
                 
                 char string_buffer[256];
                 lv_roller_get_selected_str(roller, string_buffer, 256);
@@ -129,7 +129,7 @@ namespace MOONCAKE {
             std::string wf_custom_path_list = "";
             while (1) {
                 /* Open dir */
-                res = lv_fs_dir_read(&dir, string_buffer);
+                res = lv_fs_dir_read(&dir, string_buffer, sizeof(string_buffer));
                 if (res != LV_FS_RES_OK) {
                     printf("[%s] read dir error %d\n", getAppName().c_str(), res);
                     return false;
@@ -406,7 +406,7 @@ namespace MOONCAKE {
 
             /* Create screen */
             _data.screen = lv_obj_create(NULL);
-            lv_scr_load_anim(_data.screen, LV_SCR_LOAD_ANIM_FADE_IN, 50, 0, false);
+            lv_screen_load_anim(_data.screen, LV_SCR_LOAD_ANIM_FADE_IN, 50, 0, false);
             /* Set background color */
             lv_obj_set_style_bg_color(_data.screen, lv_color_hex(0x000000), LV_STATE_DEFAULT);
             /* Lock scroll */
@@ -420,7 +420,7 @@ namespace MOONCAKE {
                 #ifdef ESP_PLATFORM
                 /* Go back home with anim will crash */
                 lv_obj_t* scr = lv_obj_create(NULL);
-                lv_scr_load_anim(scr, LV_SCR_LOAD_ANIM_NONE, 0, 0, true);
+                lv_screen_load_anim(scr, LV_SCR_LOAD_ANIM_NONE, 0, 0, true);
                 #endif
                 destroyApp();
             }
@@ -463,7 +463,7 @@ namespace MOONCAKE {
                     #ifdef ESP_PLATFORM
                     /* Go back home with anim will crash */
                     lv_obj_t* scr = lv_obj_create(NULL);
-                    lv_scr_load_anim(scr, LV_SCR_LOAD_ANIM_NONE, 0, 0, true);
+                    lv_screen_load_anim(scr, LV_SCR_LOAD_ANIM_NONE, 0, 0, true);
                     #endif
                     destroyApp();
                 }
@@ -479,7 +479,7 @@ namespace MOONCAKE {
                         #ifdef ESP_PLATFORM
                         /* Go back home with anim will crash */
                         lv_obj_t* scr = lv_obj_create(NULL);
-                        lv_scr_load_anim(scr, LV_SCR_LOAD_ANIM_NONE, 0, 0, true);
+                        lv_screen_load_anim(scr, LV_SCR_LOAD_ANIM_NONE, 0, 0, true);
                         #endif
                         destroyApp();
                         return;

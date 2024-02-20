@@ -149,7 +149,7 @@ variables:
 
    //Frame buffers
    /*A static or global variable to store the buffers*/
-   static lv_disp_draw_buf_t disp_buf;
+   static lv_draw_buf_t disp_buf;
 
    /*Static or global buffer(s). The second buffer is optional*/
    static lv_color_t buf_1[BUFF_SIZE]; //TODO: Declare your own BUFF_SIZE appropriate to your system.
@@ -174,7 +174,8 @@ variables:
    disp_drv.ver_res = HEIGHT;                 /*Set the vertical resolution in pixels*/
 
    lv_disp_t * disp;
-   disp = lv_disp_drv_register(&disp_drv); /*Register the driver and save the created display objects*/
+   // TODO
+   // disp = lv_disp_drv_register(&disp_drv); /*Register the driver and save the created display objects*/
 
    // Register the touch controller with LVGL - Not included here for brevity.
 
