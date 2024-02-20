@@ -25,8 +25,9 @@
 #include <esp_err.h>
 #include <esp_log.h>
 #include <esp_flash.h>
+#include <esp_partition.h>
 
-static const char *TAG = "SDCard_Speed_Test";
+static const char *TAG = "Launcher";
 
 void sdcard_speed_test(const char *file_path) {
     FILE *file = fopen(file_path, "r");
@@ -523,11 +524,40 @@ namespace MOONCAKE {
             _framework = (Framework*)getUserData();
         }
 
-
-        inline void dump_flash_to_sd() {
+        // const esp_partition_t *part = esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_ANY, partition_name);
+        inline void dump_flash_to_sd(uint32_t flash_address, uint32_t size)
+        {
             uint32_t flash_size;
             ESP_ERROR_CHECK(esp_flash_get_size(NULL, &flash_size));
             ESP_LOGI(TAG, "flash size=%lu", flash_size);
+
+            FILE *file = fopen("/sdcard/partition.bin", "wb");
+            if (file == NULL) {
+                ESP_LOGE(TAG, "Cannot open file!");
+                return;
+            }
+
+            uint32_t remaining_bytes = size;
+            const int buffer_size = 512 * 1024;
+            uint8_t *data_buffer = (uint8_t *)malloc(buffer_size);
+            // 360 KB/s
+            while (remaining_bytes > 0)
+            {
+                uint32_t bytes_to_read = (remaining_bytes > buffer_size) ? buffer_size : remaining_bytes;
+                esp_err_t err = esp_flash_read(NULL, data_buffer, flash_address, bytes_to_read);
+                if (err != ESP_OK)
+                {
+                    ESP_LOGE(TAG, "Read flash failed: %lu\n", flash_address);
+                    return;
+                }
+                fwrite(data_buffer, bytes_to_read, 1, file);
+                flash_address += bytes_to_read;
+                remaining_bytes -= bytes_to_read;
+                ESP_LOGI(TAG, "Read flash address: %.3f MB..", flash_address / 1024.0f / 1024);
+            }
+            fclose(file);
+            free(data_buffer);
+            ESP_LOGI(TAG, "Read flash done!");
         }
 
         /* Life cycle */
@@ -581,7 +611,11 @@ namespace MOONCAKE {
             // lv_obj_t* img = lv_img_create(_data.screenMain);
             // lv_img_set_src(img, "A:sdcard/winxp.bmp");
             // lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
-            dump_flash_to_sd();
+
+            // const esp_partition_t *part = esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_ANY, "spring_wreath");
+            // if (part != NULL) {
+            //     dump_flash_to_sd(part->address, part->size);
+            // }
         }
 
 

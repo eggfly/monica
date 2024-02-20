@@ -29,7 +29,7 @@ set(MOONCAKE_BUILTIN_APPS_INC_DIRS
 
 # Public component requirement
 set(MOONCAKE_REQUIRES
-    lvgl ArduinoJson bmp280 spi_flash driver
+    lvgl ArduinoJson bmp280 spi_flash driver esp_partition
 )
 
 # Private component requirement
