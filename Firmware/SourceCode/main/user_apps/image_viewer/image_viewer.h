@@ -35,7 +35,7 @@ namespace UserApps {
         }
 
 
-        class Sketchpad : public MOONCAKE::APP_BASE {
+        class ImageViewer : public MOONCAKE::APP_BASE {
             private:
                 SKETCHPAD::Data_t _data;
 
@@ -50,8 +50,8 @@ namespace UserApps {
 
 
             public:
-                Sketchpad() = default;
-                ~Sketchpad() = default;
+                ImageViewer() = default;
+                ~ImageViewer() = default;
 
 
                 /**

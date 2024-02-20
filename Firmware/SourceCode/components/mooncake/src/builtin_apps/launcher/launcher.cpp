@@ -22,8 +22,9 @@
 #include <stdio.h>
 #include <sys/unistd.h>
 #include <sys/stat.h>
-#include "esp_err.h"
-#include "esp_log.h"
+#include <esp_err.h>
+#include <esp_log.h>
+#include <esp_flash.h>
 
 static const char *TAG = "SDCard_Speed_Test";
 
@@ -523,6 +524,12 @@ namespace MOONCAKE {
         }
 
 
+        inline void dump_flash_to_sd() {
+            uint32_t flash_size;
+            ESP_ERROR_CHECK(esp_flash_get_size(NULL, &flash_size));
+            ESP_LOGI(TAG, "flash size=%lu", flash_size);
+        }
+
         /* Life cycle */
         void Launcher::onCreate()
         {
@@ -574,6 +581,7 @@ namespace MOONCAKE {
             // lv_obj_t* img = lv_img_create(_data.screenMain);
             // lv_img_set_src(img, "A:sdcard/winxp.bmp");
             // lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
+            dump_flash_to_sd();
         }
 
 

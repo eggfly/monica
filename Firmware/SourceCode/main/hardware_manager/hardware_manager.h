@@ -30,6 +30,7 @@ namespace HM {
         float* battery_voltage_ptr = nullptr;
         uint8_t* battery_level_ptr = nullptr;
         bool* battery_is_charging_ptr = nullptr;
+        bool* battery_is_standby_ptr = nullptr;
     };
 
 

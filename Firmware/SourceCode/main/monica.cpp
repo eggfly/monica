@@ -185,7 +185,7 @@ extern "C" void app_main(void)
     app_ptr = new AppTest("444", (void*)&ui_img_app_icon_hdpi_camera_png);
     mooncake_ui.install(app_ptr);
     // app_ptr = new AppTest("555", (void*)&ui_img_app_icon_hdpi_canvas_png);
-    UserApps::Sketchpad *testPad = new UserApps::Sketchpad;
+    UserApps::ImageViewer *testPad = new UserApps::ImageViewer;
     mooncake_ui.install(testPad);
     app_ptr = new AppTest("111", (void*)&ui_img_app_icon_hdpi_badminton_png);
     mooncake_ui.install(app_ptr);

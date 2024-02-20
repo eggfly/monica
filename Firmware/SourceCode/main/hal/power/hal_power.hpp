@@ -147,6 +147,16 @@ namespace AXP2101 {
                 return false;
             }
 
+            inline bool isBatteryStandby()
+            {
+                /* PMU status 2 */
+                _readReg(0x01, 1);
+                if ((_data_buffer[0] & 0b01100000) == 0b00000000) {
+                    return true;
+                }
+                return false;
+            }
+
             inline bool isChargeDone()
             {
                 /* PMU status 2 */

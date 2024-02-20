@@ -15,10 +15,10 @@
 
 namespace UserApps {
 
-        static const char* TAG = "Sketchpad";
+        static const char* TAG = "ImageViewer";
         
         /* Color picker, copy from demo widget */
-        void Sketchpad::color_changer_create(lv_obj_t * parent)
+        void ImageViewer::color_changer_create(lv_obj_t * parent)
         {
             static lv_palette_t palette[] = {
                 LV_PALETTE_BLUE, LV_PALETTE_GREEN, LV_PALETTE_BLUE_GREY,  LV_PALETTE_ORANGE,
@@ -66,7 +66,7 @@ namespace UserApps {
         }
 
 
-        void Sketchpad::color_changer_anim_cb(void * var, int32_t v)
+        void ImageViewer::color_changer_anim_cb(void * var, int32_t v)
         {
             lv_obj_t * obj = (lv_obj_t *)var;
             lv_coord_t max_w = lv_obj_get_width(lv_obj_get_parent(obj)) - LV_DPX(20);
@@ -86,7 +86,7 @@ namespace UserApps {
         }
 
 
-        void Sketchpad::color_changer_event_cb(lv_event_t * e)
+        void ImageViewer::color_changer_event_cb(lv_event_t * e)
         {
             if(lv_event_get_code(e) == LV_EVENT_CLICKED) {
                 lv_obj_t * color_cont = (lv_obj_t *)lv_event_get_user_data(e);
@@ -112,11 +112,11 @@ namespace UserApps {
         }
 
 
-        void Sketchpad::color_event_cb(lv_event_t * e)
+        void ImageViewer::color_event_cb(lv_event_t * e)
         {
             lv_event_code_t code = lv_event_get_code(e);
             lv_obj_t* scr = lv_obj_get_screen(lv_event_get_target(e));
-            Sketchpad* app = (Sketchpad*)lv_obj_get_user_data(scr);
+            ImageViewer* app = (ImageViewer*)lv_obj_get_user_data(scr);
 
             if(code == LV_EVENT_CLICKED) {
                 lv_palette_t * palette_primary = (lv_palette_t *)lv_event_get_user_data(e);
@@ -126,7 +126,7 @@ namespace UserApps {
         }
 
 
-        void Sketchpad::_lvgl_event_cb(lv_event_t* e)
+        void ImageViewer::_lvgl_event_cb(lv_event_t* e)
         {
             /* Get event code */
             lv_event_code_t code = lv_event_get_code(e);
@@ -136,7 +136,7 @@ namespace UserApps {
             if (code == LV_EVENT_GESTURE) {
                 // printf("gesture\n");
 
-                Sketchpad* app = (Sketchpad*)lv_event_get_user_data(e);
+                ImageViewer* app = (ImageViewer*)lv_event_get_user_data(e);
 
                 if (lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM) {
                     app->destroyApp();
@@ -146,14 +146,14 @@ namespace UserApps {
 
             /* Drawing */
             if (code == LV_EVENT_PRESSING) {
-                Sketchpad* app = (Sketchpad*)lv_event_get_user_data(e);
+                ImageViewer* app = (ImageViewer*)lv_event_get_user_data(e);
                 app->_update_drawing();
             }
             
         }
 
 
-        void Sketchpad::_update_drawing()
+        void ImageViewer::_update_drawing()
         {
             lv_indev_get_point(lv_indev_get_act(), &_data.touchPoint);
             // auto touchPoint = _data.touchPoint;
@@ -168,16 +168,15 @@ namespace UserApps {
         }
 
 
-        void Sketchpad::onSetup()
+        void ImageViewer::onSetup()
         {
             setAppName("Sketchpad");
             setAllowBgRunning(false);
             setAppIcon((void*)&ui_img_app_icon_hdpi_sketchpad_png);
         }
 
-
         /* Life cycle */
-        void Sketchpad::onCreate()
+        void ImageViewer::onCreate()
         {
             printf("[%s] onCreate\n", getAppName().c_str());
 
@@ -238,13 +237,13 @@ namespace UserApps {
         }
 
 
-        void Sketchpad::onResume()
+        void ImageViewer::onResume()
         {
             printf("[%s] onResume\n", getAppName().c_str());
         }
 
 
-        void Sketchpad::onRunning()
+        void ImageViewer::onRunning()
         {
             /* If pressed key Home */
             if (*_data.key_home_ptr) {
@@ -257,19 +256,19 @@ namespace UserApps {
         }
 
 
-        void Sketchpad::onRunningBG()
+        void ImageViewer::onRunningBG()
         {
 
         }
 
 
-        void Sketchpad::onPause()
+        void ImageViewer::onPause()
         {
             printf("[%s] onPause\n", getAppName().c_str());
         }
 
 
-        void Sketchpad::onDestroy()
+        void ImageViewer::onDestroy()
         {
             printf("[%s] onDestroy\n", getAppName().c_str());
             

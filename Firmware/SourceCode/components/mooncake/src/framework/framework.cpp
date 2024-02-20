@@ -81,6 +81,7 @@ namespace MOONCAKE {
         _config.database->Add<uint8_t>(MC_BATTERY_LEVEL, uint8_t(100));
         _config.database->Add<float>(MC_BATTERY_VOLTAGE, float(3.8f));
         _config.database->Add<bool>(MC_BATTERY_IS_CHARGING, bool(false));
+        _config.database->Add<bool>(MC_BATTERY_IS_STANDBY, bool(false));
 
         /* Wireless */
         _config.database->Add<bool>(MC_WIFI_IS_CONNECTED, bool(false));

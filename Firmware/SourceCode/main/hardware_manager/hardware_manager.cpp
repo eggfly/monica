@@ -85,13 +85,15 @@ namespace HM {
         *_power_infos.battery_level_ptr = pmu.batteryLevel();
         *_power_infos.battery_voltage_ptr = pmu.getBattVoltage() / 1000.0f;
         *_power_infos.battery_is_charging_ptr = pmu.isCharging();
+        *_power_infos.battery_is_standby_ptr = pmu.isBatteryStandby();
     }
 
 
     void Hardware_Manager::_update_go_sleep()
     {
         /* Check lvgl inactive time */
-        if (lv_disp_get_inactive_time(NULL) > _power_manager.auto_sleep_time) {
+        bool isPowerConnected = pmu.isBatteryStandby() || pmu.isCharging();
+        if (!isPowerConnected && lv_disp_get_inactive_time(NULL) > _power_manager.auto_sleep_time) {
             _power_manager.power_mode = mode_sleeping;
         }
     
@@ -215,6 +217,7 @@ namespace HM {
         _power_infos.battery_voltage_ptr = (float*)getDatabase()->Get(MC_BATTERY_VOLTAGE)->addr;
         _power_infos.battery_level_ptr = (uint8_t*)getDatabase()->Get(MC_BATTERY_LEVEL)->addr;
         _power_infos.battery_is_charging_ptr = (bool*)getDatabase()->Get(MC_BATTERY_IS_CHARGING)->addr;
+        _power_infos.battery_is_standby_ptr = (bool*)getDatabase()->Get(MC_BATTERY_IS_STANDBY)->addr;
 
         /* IMU */
         _imu_data.steps = (uint32_t*)getDatabase()->Get(MC_STEPS)->addr;

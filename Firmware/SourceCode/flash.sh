@@ -13,16 +13,25 @@ function do_work() {
     unsetopt nomatch
     # Get idf
     . ${IDF_PATH}/export.sh
-    SERIAL_PORT=`ls /dev/cu.usbmodem* 2>/dev/null`
-    if [[ -z "$SERIAL_PORT" ]]; then
-        echo "No esp32 serial port detected, exit.";
-        return;
+    
+    if [[ "$1" == "--only-build" ]]; then
+        idf.py build
     else
-        echo "Detected serial port : $SERIAL_PORT"
+        SERIAL_PORT=`ls /dev/cu.usbmodem* 2>/dev/null`
+        if [[ -z "$SERIAL_PORT" ]]; then
+            echo "No esp32 serial port detected, exit.";
+            return;
+        else
+            echo "Detected serial port : $SERIAL_PORT"
+        fi
+        if [[ "$1" == "--only-monitor" ]]; then
+            # Build, flash, and monitor
+            idf.py -p ${SERIAL_PORT} monitor
+        else
+            # Build, flash, and monitor
+            idf.py -p ${SERIAL_PORT} flash monitor
+        fi
     fi
-
-    # Build and flash and monitor
-    idf.py -p ${SERIAL_PORT} flash monitor
 }
 
-do_work
+do_work "$@"

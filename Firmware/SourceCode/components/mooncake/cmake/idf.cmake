@@ -29,12 +29,15 @@ set(MOONCAKE_BUILTIN_APPS_INC_DIRS
 
 # Public component requirement
 set(MOONCAKE_REQUIRES
-    lvgl ArduinoJson bmp280
+    lvgl ArduinoJson bmp280 spi_flash driver
 )
 
 # Private component requirement
 set(MOONCAKE_PRIV_REQUIRES
+    driver
 )
+
+message(STATUS "mooncake use components = ${MOONCAKE_REQUIRES}")
 
 # Register component
 idf_component_register(SRCS ${MOONCAKE_SRCS} ${BUILTIN_APPS_SRCS} ${MOONCAKE_ROOT_DIR}/src/mooncake.cpp
