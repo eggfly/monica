@@ -17,6 +17,8 @@ extern "C" {
 
 #include <lvgl.h>
 
+#define SPEED_UP_FLASH_WHILE_DEV    1
+
 /* Walking anim, thanks to Bashir Ahmed */
 /* https://lottiefiles.com/directdesign22 */
 LV_IMG_DECLARE(ui_img_icon_lc_walking_00_png);
@@ -118,7 +120,7 @@ LV_IMG_DECLARE(ui_img_anim_spring_wreath_9_png);  // assets\anim_spring_wreath_9
 static const lv_img_dsc_t *anim_spring_wreath[] = {
     &ui_img_anim_spring_wreath_0_png,
     &ui_img_anim_spring_wreath_1_png,
-#if SPEED_UP_FLASH_WHILE_DEV != 0
+#if SPEED_UP_FLASH_WHILE_DEV == 0
     &ui_img_anim_spring_wreath_2_png,
     &ui_img_anim_spring_wreath_3_png,
     &ui_img_anim_spring_wreath_4_png,
@@ -148,10 +150,10 @@ static const lv_img_dsc_t *anim_spring_wreath[] = {
 };
 
 // eggfly
-#if SPEED_UP_FLASH_WHILE_DEV
-#define NUM_ANIM_SPRING_WREATH 2
-#else 
+#if SPEED_UP_FLASH_WHILE_DEV == 0
 #define NUM_ANIM_SPRING_WREATH 27
+#else 
+#define NUM_ANIM_SPRING_WREATH 2
 #endif
 
 extern lv_img_dsc_t anim_spring_wreath_raw[NUM_ANIM_SPRING_WREATH];
