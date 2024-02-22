@@ -16,6 +16,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+extern "C" {
+    void pvz_start();
+}
 
 
 namespace MOONCAKE {
@@ -395,6 +398,8 @@ namespace MOONCAKE {
                 _data = data;
             }
 
+            pvz_start();
+            return;
             /* Get data's pointer from database */
             _data.time_ptr = (DataTime_t*)getDatabase()->Get(MC_TIME)->addr;
             _data.just_wake_up_ptr = (bool*)getDatabase()->Get(MC_JUST_WAKEUP)->addr;
@@ -436,6 +441,8 @@ namespace MOONCAKE {
 
         void WF_User_Custom::onRunning()
         {
+            // eggfly
+            return;
             /* If is all setup */
             if (_data.running) {
 
