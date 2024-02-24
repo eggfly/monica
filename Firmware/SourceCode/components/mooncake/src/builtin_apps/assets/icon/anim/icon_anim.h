@@ -17,7 +17,7 @@ extern "C" {
 
 #include <lvgl.h>
 
-#define SPEED_UP_FLASH_WHILE_DEV    1
+#define SPEED_UP_FLASH_WHILE_DEV    0
 
 /* Walking anim, thanks to Bashir Ahmed */
 /* https://lottiefiles.com/directdesign22 */
@@ -89,63 +89,63 @@ static const lv_img_dsc_t *anim_lc_walking[] = {
 
 #define NUM_ANIM_LC_WALKING 31
 
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_0_png);  // assets\anim_spring_wreath_0.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_1_png);  // assets\anim_spring_wreath_1.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_10_png); // assets\anim_spring_wreath_10.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_11_png); // assets\anim_spring_wreath_11.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_12_png); // assets\anim_spring_wreath_12.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_13_png); // assets\anim_spring_wreath_13.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_14_png); // assets\anim_spring_wreath_14.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_15_png); // assets\anim_spring_wreath_15.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_16_png); // assets\anim_spring_wreath_16.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_17_png); // assets\anim_spring_wreath_17.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_18_png); // assets\anim_spring_wreath_18.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_19_png); // assets\anim_spring_wreath_19.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_2_png);  // assets\anim_spring_wreath_2.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_20_png); // assets\anim_spring_wreath_20.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_21_png); // assets\anim_spring_wreath_21.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_22_png); // assets\anim_spring_wreath_22.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_23_png); // assets\anim_spring_wreath_23.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_24_png); // assets\anim_spring_wreath_24.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_25_png); // assets\anim_spring_wreath_25.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_26_png); // assets\anim_spring_wreath_26.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_3_png);  // assets\anim_spring_wreath_3.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_4_png);  // assets\anim_spring_wreath_4.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_5_png);  // assets\anim_spring_wreath_5.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_6_png);  // assets\anim_spring_wreath_6.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_7_png);  // assets\anim_spring_wreath_7.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_8_png);  // assets\anim_spring_wreath_8.png
-LV_IMG_DECLARE(ui_img_anim_spring_wreath_9_png);  // assets\anim_spring_wreath_9.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_00);  // assets\anim_spring_wreath_0.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_01);  // assets\anim_spring_wreath_1.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_02);  // assets\anim_spring_wreath_2.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_03);  // assets\anim_spring_wreath_3.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_04);  // assets\anim_spring_wreath_4.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_05);  // assets\anim_spring_wreath_5.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_06);  // assets\anim_spring_wreath_6.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_07);  // assets\anim_spring_wreath_7.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_08);  // assets\anim_spring_wreath_8.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_09);  // assets\anim_spring_wreath_9.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_10); // assets\anim_spring_wreath_10.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_11); // assets\anim_spring_wreath_11.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_12); // assets\anim_spring_wreath_12.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_13); // assets\anim_spring_wreath_13.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_14); // assets\anim_spring_wreath_14.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_15); // assets\anim_spring_wreath_15.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_16); // assets\anim_spring_wreath_16.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_17); // assets\anim_spring_wreath_17.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_18); // assets\anim_spring_wreath_18.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_19); // assets\anim_spring_wreath_19.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_20); // assets\anim_spring_wreath_20.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_21); // assets\anim_spring_wreath_21.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_22); // assets\anim_spring_wreath_22.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_23); // assets\anim_spring_wreath_23.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_24); // assets\anim_spring_wreath_24.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_25); // assets\anim_spring_wreath_25.png
+LV_IMG_DECLARE(ui_img_anim_spring_wreath_26); // assets\anim_spring_wreath_26.png
 
 static const lv_img_dsc_t *anim_spring_wreath[] = {
-    &ui_img_anim_spring_wreath_0_png,
-    &ui_img_anim_spring_wreath_1_png,
+    &ui_img_anim_spring_wreath_00,
+    &ui_img_anim_spring_wreath_01,
 #if SPEED_UP_FLASH_WHILE_DEV == 0
-    &ui_img_anim_spring_wreath_2_png,
-    &ui_img_anim_spring_wreath_3_png,
-    &ui_img_anim_spring_wreath_4_png,
-    &ui_img_anim_spring_wreath_5_png,
-    &ui_img_anim_spring_wreath_6_png,
-    &ui_img_anim_spring_wreath_7_png,
-    &ui_img_anim_spring_wreath_8_png,
-    &ui_img_anim_spring_wreath_9_png,
-    &ui_img_anim_spring_wreath_10_png,
-    &ui_img_anim_spring_wreath_11_png,
-    &ui_img_anim_spring_wreath_12_png,
-    &ui_img_anim_spring_wreath_13_png,
-    &ui_img_anim_spring_wreath_14_png,
-    &ui_img_anim_spring_wreath_15_png,
-    &ui_img_anim_spring_wreath_16_png,
-    &ui_img_anim_spring_wreath_17_png,
-    &ui_img_anim_spring_wreath_18_png,
-    &ui_img_anim_spring_wreath_19_png,
-    &ui_img_anim_spring_wreath_20_png,
-    &ui_img_anim_spring_wreath_21_png,
-    &ui_img_anim_spring_wreath_22_png,
-    &ui_img_anim_spring_wreath_23_png,
-    &ui_img_anim_spring_wreath_24_png,
-    &ui_img_anim_spring_wreath_25_png,
-    &ui_img_anim_spring_wreath_26_png,
+    &ui_img_anim_spring_wreath_02,
+    &ui_img_anim_spring_wreath_03,
+    &ui_img_anim_spring_wreath_04,
+    &ui_img_anim_spring_wreath_05,
+    &ui_img_anim_spring_wreath_06,
+    &ui_img_anim_spring_wreath_07,
+    &ui_img_anim_spring_wreath_08,
+    &ui_img_anim_spring_wreath_09,
+    &ui_img_anim_spring_wreath_10,
+    &ui_img_anim_spring_wreath_11,
+    &ui_img_anim_spring_wreath_12,
+    &ui_img_anim_spring_wreath_13,
+    &ui_img_anim_spring_wreath_14,
+    &ui_img_anim_spring_wreath_15,
+    &ui_img_anim_spring_wreath_16,
+    &ui_img_anim_spring_wreath_17,
+    &ui_img_anim_spring_wreath_18,
+    &ui_img_anim_spring_wreath_19,
+    &ui_img_anim_spring_wreath_20,
+    &ui_img_anim_spring_wreath_21,
+    &ui_img_anim_spring_wreath_22,
+    &ui_img_anim_spring_wreath_23,
+    &ui_img_anim_spring_wreath_24,
+    &ui_img_anim_spring_wreath_25,
+    &ui_img_anim_spring_wreath_26,
 #endif
 };
 
