@@ -31,3 +31,4 @@ LV_IMG_DECLARE(ui_img_app_icon_hdpi_wf_spring_wreath_png);    // assets\app_icon
 LV_IMG_DECLARE(ui_img_app_icon_hdpi_wf_user_custom_png);    // assets\app_icon_hdpi_wf_user_custom.png
 LV_IMG_DECLARE(ui_img_app_icon_hdpi_sketchpad_png);    // assets\app_icon_hdpi_sketchpad.png
 LV_IMG_DECLARE(ui_img_app_icon_hdpi_settings_png);    // assets\app_icon_hdpi_settings.png
+LV_IMG_DECLARE(ui_img_sun_108_png);   // assets/sun_108.png

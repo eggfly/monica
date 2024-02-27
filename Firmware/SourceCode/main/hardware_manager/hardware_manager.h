@@ -25,6 +25,14 @@ namespace HM {
         tm rtc_time;
     };
 
+    struct ScreenData_t {
+        /* update time in 1Hz */
+        int64_t update_interval = 1000000;
+        int64_t update_count = 0;
+        int32_t* brightness_ptr = nullptr;
+        bool* brightness_just_set_ptr = nullptr;
+    };
+
 
     struct PowerInfos_t {
         float* battery_voltage_ptr = nullptr;
@@ -93,6 +101,7 @@ namespace HM {
             ImuData_t _imu_data;
             SensorData_t _sensor_data;
             SystemData_t _system_data;
+            ScreenData_t _screen_data;
             KeyData_t _key_data;
 
 
@@ -103,6 +112,7 @@ namespace HM {
 
             void _update_go_sleep();
             void _update_power_mode();
+            void _update_brightness();
 
             void _update_key_data();
 

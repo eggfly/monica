@@ -63,8 +63,12 @@ namespace MOONCAKE {
         /* Time */
         #ifdef MC_TIME
         _config.database->Add<DataTime_t>(MC_TIME, DataTime_t());
-        _config.database->Add<bool>(MC_TIME_JSUT_SET, bool(false));
+        _config.database->Add<bool>(MC_TIME_JUST_SET, bool(false));
         #endif
+
+        /* Screen */
+        _config.database->Add<int32_t>(MC_BRIGHTNESS, int32_t(50));
+        _config.database->Add<bool>(MC_BRIGHTNESS_JUST_SET, bool(false));
 
         /* Hardware */
         #ifdef MC_DISP_HOR

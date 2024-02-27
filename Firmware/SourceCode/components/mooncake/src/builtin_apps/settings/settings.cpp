@@ -92,7 +92,7 @@ namespace MOONCAKE {
             getDatabase()->Put<DataTime_t>(MC_TIME, time_buffer);
 
             /* Set flag */
-            getDatabase()->Put<bool>(MC_TIME_JSUT_SET, true);
+            getDatabase()->Put<bool>(MC_TIME_JUST_SET, true);
 
         }
 

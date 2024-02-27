@@ -39,8 +39,11 @@ namespace MOONCAKE {
         /* Settings */
         app_ptr = new BUILTIN_APP::Settings;
         install(app_ptr, nullptr);
-    }
 
+        /* Settings Brightness */
+        app_ptr = new BUILTIN_APP::SettingsBrightness;
+        install(app_ptr, nullptr);
+    }
 
 }
 

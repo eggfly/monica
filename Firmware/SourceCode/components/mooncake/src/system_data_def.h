@@ -43,7 +43,11 @@ namespace MOONCAKE {
         bool wasSet = false;    /* Flag to set time*/
     };
 }
-#define MC_TIME_JSUT_SET        "_TIME_SET"     // bool
+#define MC_TIME_JUST_SET        "_TIME_SET"     // bool
+
+#define MC_BRIGHTNESS                "_BRIGHTNESS"     // int32_t
+#define MC_BRIGHTNESS_JUST_SET        "_BRIGHTNESS_JUST_SET"     // bool
+
 #endif
 
 
@@ -80,7 +84,7 @@ namespace MOONCAKE {
 #define MC_NOTIFICATION_IS_ON   "_NOTE_ON"      // bool
 
 
-/* Setps */
+/* Steps */
 #define MC_STEPS                "_STEPS"        // uint32_t
 
 

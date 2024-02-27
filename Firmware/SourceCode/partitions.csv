@@ -2,7 +2,7 @@
 # Name, Type, SubType, Offset, Size, Flags
 nvs,data,nvs,,20K,
 otadata,data,ota,,8K,
-app0,app,ota_0,,7M,
+app0,app,ota_0,,8M,
 # spiffs_res_0,data,spiffs,,1M,
 spiffs_res_1,data,spiffs,,64K,
 walking,data,undefined,,0x15470a,

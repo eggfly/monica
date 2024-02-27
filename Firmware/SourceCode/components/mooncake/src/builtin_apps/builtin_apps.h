@@ -14,3 +14,4 @@
 #include "wf_spring_wreath/wf_spring_wreath.h"
 #include "wf_user_custom/wf_user_custom.h"
 #include "settings/settings.h"
+#include "brightness/settings_brightness.h"
