@@ -28,7 +28,7 @@ namespace MOONCAKE {
                 lv_color_t* canvas_buffer = nullptr;
                 lv_point_t touchPoint = {-1, -1};
                 lv_color_t pen_color = lv_palette_main(LV_PALETTE_GREEN);
-                lv_coord_t pen_size = 12;
+                lv_coord_t pen_size = 16;
 
                 bool* key_home_ptr = nullptr;
                 

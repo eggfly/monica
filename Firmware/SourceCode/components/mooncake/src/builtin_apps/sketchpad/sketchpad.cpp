@@ -157,17 +157,19 @@ namespace MOONCAKE {
         void Sketchpad::_update_drawing()
         {
             lv_indev_get_point(lv_indev_get_act(), &_data.touchPoint);
-            // auto touchPoint = _data.touchPoint;
-            // ESP_LOGI(TAG, "touch: %d %d", touchPoint.x, touchPoint.y);
+            auto touchPoint = _data.touchPoint;
+            ESP_LOGI(TAG, "touch: %d %d", touchPoint.x, touchPoint.y);
 
             lv_draw_rect_dsc_t rect;
             lv_draw_rect_dsc_init(&rect);
             rect.radius = LV_RADIUS_CIRCLE;
             rect.bg_color = _data.pen_color;
             // eggfly
-            lv_canvas_draw_rect(_data.canvas, _data.touchPoint.x, _data.touchPoint.y, _data.pen_size, _data.pen_size, &rect);
+            lv_canvas_draw_rect(_data.canvas,
+                                _data.touchPoint.x - _data.pen_size / 2,
+                                _data.touchPoint.y - _data.pen_size / 2,
+                                _data.pen_size, _data.pen_size, &rect);
         }
-
 
         void Sketchpad::onSetup()
         {

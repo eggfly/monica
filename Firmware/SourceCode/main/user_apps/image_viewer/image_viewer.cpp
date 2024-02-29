@@ -164,7 +164,10 @@ namespace UserApps {
             rect.radius = LV_RADIUS_CIRCLE;
             rect.bg_color = _data.pen_color;
             // eggfly
-            lv_canvas_draw_rect(_data.canvas, _data.touchPoint.x, _data.touchPoint.y, _data.pen_size, _data.pen_size, &rect);
+            lv_canvas_draw_rect(_data.canvas,
+                                _data.touchPoint.x - _data.pen_size / 2,
+                                _data.touchPoint.y - _data.pen_size / 2,
+                                _data.pen_size, _data.pen_size, &rect);
         }
 
 
