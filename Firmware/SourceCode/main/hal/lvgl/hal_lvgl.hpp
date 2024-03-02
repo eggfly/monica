@@ -58,10 +58,12 @@ namespace LVGL
          *'lv_disp_flush_ready()' has to be called when finished.*/
         static void _disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
         {
-            uint32_t w = (area->x2 - area->x1 + 1);
-            uint32_t h = (area->y2 - area->y1 + 1);
-
+            int32_t w = (area->x2 - area->x1 + 1);
+            int32_t h = (area->y2 - area->y1 + 1);
+            // ESP_LOGI(TAG, "flush x,y,w,h=%d,%d,%ld,%ld", area->x1, area->y1, w, h);
             _disp->startWrite();
+            // eggfly: TODO: rotation support
+            // _disp->setRotation(disp_drv->rotated);
             _disp->setWindow(area->x1, area->y1, area->x2, area->y2);
             // _disp->pushPixels(&color_p->full, w * h, true);
             _disp->pushPixelsDMA(&color_p->full, w * h, true);
@@ -124,9 +126,10 @@ namespace LVGL
 
             static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
             lv_disp_drv_init(&disp_drv);   /*Basic initialization*/
-
             /*Set up the functions to access to your display*/
 
+            // eggfly
+            disp_drv.sw_rotate = 1;
             /*Set the resolution of the display*/
             disp_drv.hor_res = _disp->width();
             disp_drv.ver_res = _disp->height();

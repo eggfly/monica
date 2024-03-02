@@ -25,6 +25,10 @@ namespace MOONCAKE {
         APP_BASE* app_ptr = nullptr;
 
         /* User custom watch face */
+        app_ptr = new BUILTIN_APP::PvZ;
+        install(app_ptr, nullptr);
+
+        /* User custom watch face */
         app_ptr = new BUILTIN_APP::WF_User_Custom;
         install(app_ptr, nullptr);
 

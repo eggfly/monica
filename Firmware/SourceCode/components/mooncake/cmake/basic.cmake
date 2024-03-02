@@ -49,6 +49,12 @@ target_include_directories(mooncake PUBLIC
     ${BUILTIN_INCS}
 )
 
+set(COMPILE_OPTIONS
+    -Wno-missing-prototypes
+    -Wno-deprecated-enum-enum-conversion
+)
+
+target_compile_options(mooncake PUBLIC ${COMPILE_OPTIONS})
 
 # Link
 target_link_libraries(mooncake PUBLIC lvgl lvgl::examples lvgl::demos ArduinoJson)
