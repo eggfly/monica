@@ -1,5 +1,5 @@
 /**
- * @file hal_sd_crad.hpp
+ * @file hal_sd_card.hpp
  * @author Forairaaaaa
  * @brief Init SD card and file system for lvgl's file r/w
  * @version 0.1

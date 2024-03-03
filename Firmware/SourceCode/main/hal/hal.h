@@ -15,7 +15,7 @@
 #include "lvgl/hal_lvgl.hpp"
 #include "power/hal_power.hpp"
 #include "rtc/hal_rtc.hpp"
-#include "sd_card/hal_sd_crad.hpp"
+#include "sd_card/hal_sd_card.hpp"
 #include "tp/hal_tp.hpp"
 #include "sensor/bmp280.hpp"
 #include <BMI270.h>

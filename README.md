@@ -14,8 +14,10 @@
 | 0x34 | AXP2101 | 电源管理 |
 | 0x38 | FT3168 | 需要禁用 monitor 模式 |
 | 0x51 | PCF8563 | RTC |
-| 0x68 | MPU | 运动传感器 |
-| 0x77 | BMP280 | (0x76) |
+| 0x68 | MPU | BMI270 运动传感器 (BMI2_I2C_PRIM_ADDR) |
+| 0x77 | BMP280 | (0x76) 气压传感器 (BMP280_I2C_ADDRESS_1) |
+
+* BMM150: https://community.bosch-sensortec.com/t5/MEMS-sensors-forum/BMI270-BMM150-Interrupt-not-generating-by-BMI270-shuttle-board/td-p/56083/page/2
 
 * icons:
 * https://www.freepik.com/author/freepik/icons/flat-circular-flat_9?t=f
@@ -26,7 +28,7 @@
 ![](https://github.com/Forairaaaaa/monica/blob/main/Pics/hardware1.png?raw=true)
 
 - **主控**：ESP32-S3，32M 外置 Flash
-- **IMU**：BMI270 + BM150 （抬手唤醒、计步器、指南针）
+- **IMU**：BMI270 + BMM150 （抬手唤醒、计步器、指南针）
 - **电源管理**：AXP2101
 - **其他**：SD卡槽、RTC、蜂鸣器、MIC、气压传感、按键
 - [**屏幕**](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.a41c2e8dNZ5GOq&id=688638221390)：1.8寸 Amoled 368*448 
