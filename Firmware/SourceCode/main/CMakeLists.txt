@@ -29,6 +29,8 @@ set(USER_APPS_INCS
 
 idf_component_register(SRCS "monica.cpp" ${HAL_SRCS} ${USER_APPS_SRCS} ${HM_SRCS}
                     INCLUDE_DIRS "." ${HAL_INCS} ${USER_APPS_INCS} ${HM_INCS})
+target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-unused-variable")
+idf_build_set_property(CXX_COMPILE_OPTIONS "-Wno-deprecated-enum-enum-conversion" APPEND)
 
 # spiffs_create_partition_image(spiffs_res_0 ../spiffs_res_0 FLASH_IN_PROJECT)
 # spiffs_create_partition_image(spiffs_res_1 ../spiffs_res_1 FLASH_IN_PROJECT)
