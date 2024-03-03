@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "BMI270.h"
+#include "MyBMI270.h"
 #include <esp_timer.h>
 #include <esp_log.h>
 #include <cstring>

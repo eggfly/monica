@@ -10,6 +10,8 @@ set(BMI270_SRC_DIRS
 # Head files directories
 set(BMI270_INC_DIRS
     src/
+    src/utilities/BMI270-Sensor-API
+    src/utilities/BMM150-Sensor-API
 )
 
 # Public component requirement

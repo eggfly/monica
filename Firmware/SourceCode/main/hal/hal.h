@@ -18,7 +18,7 @@
 #include "sd_card/hal_sd_card.hpp"
 #include "tp/hal_tp.hpp"
 #include "sensor/bmp280.hpp"
-#include <BMI270.h>
+#include <MyBMI270.h>
 extern "C" {
 #include "usb_msc/hal_usb_msc.h"
 }
