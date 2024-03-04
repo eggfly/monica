@@ -102,6 +102,14 @@ namespace lgfx
       cs_control(true);
       delay(10);
 
+      // /* MADCTL: Memory Write Direction Horizontal Flip */
+      // cs_control(false);
+      // write_cmd(0x36);
+      // _bus->writeCommand(0b01000000, 8);
+      // _bus->wait();
+      // cs_control(true);
+      // delay(10);
+
       /* Display on */
       cs_control(false);
       write_cmd(0x29);

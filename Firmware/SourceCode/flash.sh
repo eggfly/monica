@@ -26,7 +26,7 @@ function do_work() {
         fi
         if [[ "$1" == "--only-monitor" ]]; then
             # Build, flash, and monitor
-            idf.py -p ${SERIAL_PORT} monitor
+            idf.py -p ${SERIAL_PORT} monitor --no-reset
         else
             # Build, flash, and monitor
             idf.py -p ${SERIAL_PORT} flash monitor
