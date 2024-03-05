@@ -17,6 +17,7 @@
 
 extern "C" {
     void pvz_start();
+    void exit_game_cb(lv_event_t *e);
 }
 
 
@@ -50,8 +51,8 @@ namespace MOONCAKE {
         void PvZ::onCreate()
         {
             printf("[%s] onCreate\n", getAppName().c_str());
-            // eggfly: TODO fix bug
-            // lv_disp_set_rotation(NULL, LV_DISP_ROT_270);
+            // eggfly
+            lv_disp_set_rotation(NULL, LV_DISP_ROT_270);
             /* make data goes default */
             {
                 PVZ::Data_t data;
@@ -61,8 +62,8 @@ namespace MOONCAKE {
             _data.key_home_ptr = (bool*)getDatabase()->Get(MC_KEY_HOME)->addr;
             /* Reset at first */
             *_data.key_home_ptr = false;
-
-            pvz_start();            
+            
+            pvz_start();
 
         }
 
@@ -93,8 +94,10 @@ namespace MOONCAKE {
                 lv_obj_t* scr = lv_obj_create(NULL);
                 lv_scr_load_anim(scr, LV_SCR_LOAD_ANIM_NONE, 0, 0, true);
                 #endif
+                exit_game_cb(nullptr);
+                lv_disp_set_rotation(NULL, LV_DISP_ROT_NONE);
                 destroyApp();
-                esp_restart();
+                // esp_restart();
             }
 
         }

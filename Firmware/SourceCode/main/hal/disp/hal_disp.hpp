@@ -33,7 +33,7 @@ class LGFX_Monica : public lgfx::LGFX_Device {
                 cfg.spi_mode = 1;             // SPI通信モードを設定 (0 ~ 3)
                 //   cfg.freq_write = 1*1000*1000;    // 送信時のSPIクロック (最大80MHz, 80MHzを整数で割った値に丸められます)
                 //   cfg.freq_write = 10*1000*1000;
-                cfg.freq_write = 80 * 1000 * 1000; // eggfly: QSPI 通信频率在这里改
+                cfg.freq_write = 78 * 1000 * 1000; // eggfly: QSPI 通信频率在这里改
                 cfg.freq_read  = 16000000;    // 受信時のSPIクロック
                 cfg.spi_3wire  = true;        // 受信をMOSIピンで行う場合はtrueを設定
                 cfg.use_lock   = true;        // トランザクションロックを使用する場合はtrueを設定
