@@ -16,6 +16,7 @@ function do_work() {
     
     if [[ "$1" == "--only-build" ]]; then
         idf.py build
+        esptool --chip esp32s3 merge_bin -o monica-firmware-0x0.bin 0x0 build/bootloader/bootloader.bin 0x8000 build/partition_table/partition-table.bin 0xe000 build/ota_data_initial.bin 0x10000 build/monica.bin 
     else
         SERIAL_PORT=`ls /dev/cu.usbmodem* 2>/dev/null`
         if [[ -z "$SERIAL_PORT" ]]; then
