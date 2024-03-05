@@ -15,7 +15,6 @@
 #include "../tp/hal_tp.hpp"
 
 #include "lv_demos.h"
-
 #include <stdio.h>
 #include <string.h>
 #include <sys/unistd.h>
@@ -26,6 +25,7 @@
 
 #include "esp_partition.h"
 #include "../../../components/mooncake/src/builtin_apps/assets/icon/anim/icon_anim.h"
+#include "../../../components/mooncake/src/builtin_apps/assets/assets.h"
 
 // static inline uint32_t micros_start() __attribute__ ((always_inline));
 // static inline uint32_t micros_start()
@@ -175,7 +175,14 @@ namespace LVGL
             indev_drv.type = LV_INDEV_TYPE_POINTER;
             indev_drv.read_cb = _touchpad_read;
             // indev_touchpad = lv_indev_drv_register(&indev_drv);
-            lv_indev_drv_register(&indev_drv);
+            lv_indev_t * indev_mouse = lv_indev_drv_register(&indev_drv);
+            lv_obj_t * mouse_cursor = lv_img_create(lv_scr_act());
+            lv_img_set_src(mouse_cursor, &ui_img_cursor_hand);
+            lv_indev_set_cursor(indev_mouse, mouse_cursor);
+
+            // static lv_indev_drv_t indev_mouse_drv;
+            // lv_indev_drv_init(&indev_mouse_drv);
+            // indev_mouse_drv.type = LV_INDEV_TYPE_POINTER;
         }
 
     public:

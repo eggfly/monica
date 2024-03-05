@@ -78,6 +78,9 @@ namespace FT3168 {
                 // _writrReg(0x88, 0x14);
                 _writrReg(0x88, 0x14);
                 // ESP_LOGI(TAG, "ID_G_PERIODACTIVE, %d", _data_buffer[0]);
+
+                // 近距离感应使能
+                // _writrReg(0xB0, 0x0);
             }
 
 
