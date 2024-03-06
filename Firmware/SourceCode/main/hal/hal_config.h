@@ -47,4 +47,4 @@
 
 #define BRIGHTNESS          64
 
-#define ENABLE_LVGL_BLACK_WATCH     0
+#define ENABLE_LVGL_BLACK_WATCH     1

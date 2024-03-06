@@ -10,6 +10,7 @@
  */
 #include "mooncake.h"
 
+#define USE_CUSTOM_WATCH_FACE_APP   0
 
 namespace MOONCAKE {
 
@@ -28,9 +29,11 @@ namespace MOONCAKE {
         app_ptr = new BUILTIN_APP::PvZ;
         install(app_ptr, nullptr);
 
+#if USE_CUSTOM_WATCH_FACE_APP == 1
         /* User custom watch face */
         app_ptr = new BUILTIN_APP::WF_User_Custom;
         install(app_ptr, nullptr);
+#endif
 
         /* Default anim watch face */
         app_ptr = new BUILTIN_APP::WF_Spring_Wreath;

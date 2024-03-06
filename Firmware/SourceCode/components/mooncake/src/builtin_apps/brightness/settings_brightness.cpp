@@ -71,7 +71,7 @@ void SettingsBrightness::onCreate() {
   _data.key_home_ptr = (bool *)getDatabase()->Get(MC_KEY_HOME)->addr;
   /* Reset at first */
   *_data.key_home_ptr = false;
-  ui_init();
+  brightness_ui_init();
 }
 
 void SettingsBrightness::onResume() {

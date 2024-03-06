@@ -33,4 +33,5 @@ LV_IMG_DECLARE(ui_img_app_icon_hdpi_sketchpad_png);    // assets\app_icon_hdpi_s
 LV_IMG_DECLARE(ui_img_app_icon_hdpi_settings_png);    // assets\app_icon_hdpi_settings.png
 LV_IMG_DECLARE(ui_img_sun_108_png);
 LV_IMG_DECLARE(ui_img_pvz_108_png);
+LV_IMG_DECLARE(ui_img_watch_face_108_png);
 LV_IMG_DECLARE(ui_img_cursor_hand);

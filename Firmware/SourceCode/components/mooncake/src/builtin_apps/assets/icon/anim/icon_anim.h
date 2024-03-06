@@ -16,8 +16,7 @@ extern "C" {
 #endif
 
 #include <lvgl.h>
-
-#define SPEED_UP_FLASH_WHILE_DEV    0
+#include "local_def.h"
 
 /* Walking anim, thanks to Bashir Ahmed */
 /* https://lottiefiles.com/directdesign22 */

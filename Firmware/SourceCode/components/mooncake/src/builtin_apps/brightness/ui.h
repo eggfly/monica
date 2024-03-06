@@ -43,7 +43,7 @@ LV_FONT_DECLARE( ui_font_14_bold);
 LV_FONT_DECLARE( ui_font_mos_semibold_16);
 LV_FONT_DECLARE( ui_font_number);
 
-void ui_init(void);
+void brightness_ui_init(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/

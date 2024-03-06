@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
+
+#include <esp_system.h>
 #include "watch_face.h"
 #include "../assets/assets.h"
 #include "math.h"
@@ -77,7 +79,7 @@ namespace UserApps
         /* Add event callback */
         lv_obj_add_event_cb(_data.screen, _lvgl_event_cb, LV_EVENT_ALL, (void *)this);
 
-        ui_init();
+        watch_face_ui_init();
     }
 
     void BlackWatch::onResume()
@@ -95,6 +97,7 @@ namespace UserApps
 
             /* Quit */
             destroyApp();
+            esp_restart();
         }
     }
 

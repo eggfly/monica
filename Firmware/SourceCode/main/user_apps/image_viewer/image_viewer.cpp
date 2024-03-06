@@ -173,7 +173,7 @@ namespace UserApps {
 
         void ImageViewer::onSetup()
         {
-            setAppName("Sketchpad");
+            setAppName("ImageViewer");
             setAllowBgRunning(false);
             setAppIcon((void*)&ui_img_app_icon_hdpi_sketchpad_png);
         }

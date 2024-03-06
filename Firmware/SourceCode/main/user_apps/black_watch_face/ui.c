@@ -234,7 +234,7 @@ void ui_event_x_button(lv_event_t *e);
 lv_obj_t *ui_x_button;
 lv_obj_t *ui_x;
 void ui_event____initial_actions0(lv_event_t *e);
-lv_obj_t *ui____initial_actions0;
+lv_obj_t *watch_face_ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[3] = {&ui_img_bg1_png, &ui_img_bg2_png, &ui_img_bg3_png};
 const lv_img_dsc_t *ui_imgset_btn_bg_[3] = {&ui_img_btn_bg_1_png, &ui_img_btn_bg_2_png, &ui_img_btn_bg_3_png};
 const lv_img_dsc_t *ui_imgset_call[2] = {&ui_img_call1_png, &ui_img_call2_png};
@@ -911,7 +911,7 @@ void ui_event____initial_actions0(lv_event_t *e)
 
 ///////////////////// SCREENS ////////////////////
 
-void ui_init(void)
+void watch_face_ui_init(void)
 {
       LV_EVENT_GET_COMP_CHILD = lv_event_register_id();
 
@@ -927,9 +927,9 @@ void ui_init(void)
       ui_ecg_screen_init();
       ui_blood_pressure_screen_init();
       ui_measuing_screen_init();
-      ui____initial_actions0 = lv_obj_create(NULL);
-      lv_obj_add_event_cb(ui____initial_actions0, ui_event____initial_actions0, LV_EVENT_ALL, NULL);
+      watch_face_ui____initial_actions0 = lv_obj_create(NULL);
+      lv_obj_add_event_cb(watch_face_ui____initial_actions0, ui_event____initial_actions0, LV_EVENT_ALL, NULL);
 
-      lv_disp_load_scr(ui____initial_actions0);
+      lv_disp_load_scr(watch_face_ui____initial_actions0);
       lv_disp_load_scr(ui_watch_digital);
 }

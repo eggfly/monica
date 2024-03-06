@@ -80,7 +80,7 @@ void Fadeon_Animation(lv_obj_t *TargetObject, int delay) {
 
 ///////////////////// SCREENS ////////////////////
 
-void ui_init(void) {
+void brightness_ui_init(void) {
   lv_disp_t *dispp = lv_disp_get_default();
   lv_theme_t *theme = lv_theme_default_init(
       dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
