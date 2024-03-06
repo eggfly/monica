@@ -47,7 +47,7 @@ void HAL::init()
   sd.init();
 
   /* Lvgl */
-  lvgl.init(&disp, &tp);
+  lvgl.lv_port_init(&disp, &tp, &imu);
 
   // lv_fs_file_t f;
   // lv_fs_res_t res;

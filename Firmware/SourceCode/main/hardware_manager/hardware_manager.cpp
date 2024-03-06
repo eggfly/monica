@@ -66,6 +66,12 @@ void Hardware_Manager::_update_rtc_time() {
 void Hardware_Manager::_update_imu_data() {
   /* Read IMU */
   *_imu_data.steps = imu.getSteps();
+  // if (imu.accelerationAvailable())
+  // {
+  //   float x, y, z;
+  //   int ret = imu.readAcceleration(x, y, z);
+  //   ESP_LOGI(TAG, "_update_imu_data() ret=%d %f,%f,%f", ret, x, y, z);
+  // }
 }
 
 void Hardware_Manager::_update_sensor_data() {

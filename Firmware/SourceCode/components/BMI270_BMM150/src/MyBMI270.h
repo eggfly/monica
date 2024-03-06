@@ -26,6 +26,8 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
+#pragma once
+
 #include "utilities/BMI270-Sensor-API/bmi270.h"
 #include "utilities/BMM150-Sensor-API/bmm150.h"
 #include <driver/i2c.h>

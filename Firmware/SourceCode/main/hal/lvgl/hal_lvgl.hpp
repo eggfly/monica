@@ -27,6 +27,8 @@
 #include "../../../components/mooncake/src/builtin_apps/assets/icon/anim/icon_anim.h"
 #include "../../../components/mooncake/src/builtin_apps/assets/assets.h"
 
+#include <MyBMI270.h>
+
 // static inline uint32_t micros_start() __attribute__ ((always_inline));
 // static inline uint32_t micros_start()
 // {
@@ -36,10 +38,10 @@
 //   return micros();
 // }
 
-extern "C" {
+extern "C"
+{
     void spi_flash_mmap_dump(void);
 }
-
 
 namespace LVGL
 {
@@ -49,6 +51,7 @@ namespace LVGL
     static lgfx::LGFX_Device *_disp;
     static FT3168::TP_FT3168 *_tp;
     static FT3168::TouchPoint_t _tpp;
+    static BMI270::BMI270 *_imu;
 
     class LVGL
     {
@@ -83,6 +86,24 @@ namespace LVGL
                 // ESP_LOGI(TAG, "_touchpad_read: %d %d", _tpp.x, _tpp.y);
                 data->point.x = _tpp.x;
                 data->point.y = _tpp.y;
+                data->state = LV_INDEV_STATE_PR;
+            }
+            else
+            {
+                data->state = LV_INDEV_STATE_REL;
+            }
+        }
+
+        /* Will be called by the library */
+        static void _imu_pointer_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *data)
+        {
+            if (_imu->accelerationAvailable())
+            {
+                float x, y, z;
+                int ret = _imu->readAcceleration(x, y, z);
+                ESP_LOGI(TAG, "_imu_pointer_read() ret=%d %f,%f,%f", ret, x, y, z);
+                data->point.x = _disp->width() / 2;
+                data->point.y = _disp->height() / 2;
                 data->state = LV_INDEV_STATE_PR;
             }
             else
@@ -165,24 +186,33 @@ namespace LVGL
              *  The `..._read()` function are only examples.
              *  You should shape them according to your hardware
              */
-            static lv_indev_drv_t indev_drv;
+            {
+                static lv_indev_drv_t indev_drv;
 
-            /*------------------
-             * Touchpad
-             * -----------------*/
-            /*Register a touchpad input device*/
-            lv_indev_drv_init(&indev_drv);
-            indev_drv.type = LV_INDEV_TYPE_POINTER;
-            indev_drv.read_cb = _touchpad_read;
-            // indev_touchpad = lv_indev_drv_register(&indev_drv);
-            lv_indev_t * indev_mouse = lv_indev_drv_register(&indev_drv);
-            lv_obj_t * mouse_cursor = lv_img_create(lv_scr_act());
-            lv_img_set_src(mouse_cursor, &ui_img_cursor_hand);
-            lv_indev_set_cursor(indev_mouse, mouse_cursor);
+                /*------------------
+                 * Touchpad
+                 * -----------------*/
+                /*Register a touchpad input device*/
+                lv_indev_drv_init(&indev_drv);
+                indev_drv.type = LV_INDEV_TYPE_POINTER;
+                indev_drv.read_cb = _touchpad_read;
+                lv_indev_t *indev_mouse = lv_indev_drv_register(&indev_drv);
+                lv_obj_t *mouse_cursor = lv_img_create(lv_scr_act());
+                lv_img_set_src(mouse_cursor, LV_SYMBOL_CLOSE);
+                lv_indev_set_cursor(indev_mouse, mouse_cursor);
+            }
 
-            // static lv_indev_drv_t indev_mouse_drv;
-            // lv_indev_drv_init(&indev_mouse_drv);
-            // indev_mouse_drv.type = LV_INDEV_TYPE_POINTER;
+            {
+                static lv_indev_drv_t indev_imu_pointer_drv;
+
+                lv_indev_drv_init(&indev_imu_pointer_drv);
+                indev_imu_pointer_drv.type = LV_INDEV_TYPE_POINTER;
+                indev_imu_pointer_drv.read_cb = _imu_pointer_read;
+                lv_indev_t *indev_imu = lv_indev_drv_register(&indev_imu_pointer_drv);
+                lv_obj_t *imu_cursor = lv_img_create(lv_scr_act());
+                lv_img_set_src(imu_cursor, &ui_img_cursor_hand);
+                lv_indev_set_cursor(indev_imu, imu_cursor);
+            }
         }
 
     public:
@@ -226,7 +256,8 @@ namespace LVGL
             }
         }
 
-        inline const void * map_partition(const char * partition_name) {
+        inline const void *map_partition(const char *partition_name)
+        {
             const esp_partition_t *part = esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_ANY, partition_name);
             if (part != NULL)
             {
@@ -389,7 +420,7 @@ namespace LVGL
          * @param disp
          * @param tp
          */
-        inline void init(lgfx::LGFX_Device *disp, FT3168::TP_FT3168 *tp)
+        inline void lv_port_init(lgfx::LGFX_Device *disp, FT3168::TP_FT3168 *tp, BMI270::BMI270 *imu)
         {
             _disp = disp;
             // vTaskDelay(pdMS_TO_TICKS(1000));
@@ -397,6 +428,7 @@ namespace LVGL
             // vTaskDelay(pdMS_TO_TICKS(1000));
             // testRects(*disp, TFT_GREEN);
             _tp = tp;
+            _imu = imu;
 
             lv_init();
             spiffs_init("/spiffs_0", "spiffs_res_0");
