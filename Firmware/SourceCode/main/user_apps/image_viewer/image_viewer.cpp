@@ -10,6 +10,7 @@
  */
 #include "image_viewer.h"
 #include "../assets/assets.h"
+#include "monica.h"
 #include "math.h"
 #include <esp_log.h>
 
@@ -183,7 +184,6 @@ namespace UserApps {
         {
             printf("[%s] onCreate\n", getAppName().c_str());
 
-
             /* Reset data to default */
             {
                 SKETCHPAD::Data_t data;
@@ -196,6 +196,8 @@ namespace UserApps {
             /* Reset at first */
             *_data.key_home_ptr = false;
 
+
+            hardware_manager.lvgl.setPauseLvgl(true);
 
             /* Create screen */
             _data.screen = lv_obj_create(NULL);
@@ -275,6 +277,7 @@ namespace UserApps {
         {
             printf("[%s] onDestroy\n", getAppName().c_str());
             
+            hardware_manager.lvgl.setPauseLvgl(false);
             /* Free buffer */
             /* Stop lvgl using that buffer before freeing */
             lv_canvas_set_buffer(_data.canvas, _data.canvas_buffer, 0, 0, LV_IMG_CF_TRUE_COLOR);

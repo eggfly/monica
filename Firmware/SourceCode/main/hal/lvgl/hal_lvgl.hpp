@@ -60,6 +60,9 @@ private:
    *background but 'lv_disp_flush_ready()' has to be called when finished.*/
   static void _disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area,
                           lv_color_t *color_p) {
+    if (pauseLvgl) {
+      return;
+    }
     int32_t w = (area->x2 - area->x1 + 1);
     int32_t h = (area->y2 - area->y1 + 1);
     // ESP_LOGI(TAG, "flush x,y,w,h=%d,%d,%ld,%ld", area->x1, area->y1, w, h);
@@ -226,6 +229,8 @@ private:
   }
 
 public:
+  static bool pauseLvgl;
+  static void setPauseLvgl(bool pause) { pauseLvgl = pause; }
   void testRects(lgfx::LGFX_Device &tft, uint16_t color) {
     uint32_t start;
     int32_t n, i, i2;

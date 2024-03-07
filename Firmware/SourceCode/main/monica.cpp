@@ -8,16 +8,16 @@
  * @copyright Copyright (c) 2023
  * 
  */
-#include <mooncake.h>
+#include "monica.h"
 #include "user_apps/user_apps.h"
-#include "hardware_manager/hardware_manager.h"
 #include "user_apps/public_assets/assets.h"
 
 #include <lv_examples.h>
 
 
 static MOONCAKE::Mooncake mooncake_ui;
-static HM::Hardware_Manager hardware_manager;
+
+HM::Hardware_Manager hardware_manager;
 
 
 
