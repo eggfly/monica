@@ -15,7 +15,7 @@
 #include <bmp280.h>
 
 
-#define SCROLL_VER          0
+#define SCROLL_VERTICALLY   0
 #define ICON_ZOOM_LIMIT     32
 #define PLAY_WALKING_ANIM   1
 
@@ -127,7 +127,7 @@ namespace MOONCAKE {
 
         void Launcher::updateAppIconZoom()
         {
-            #if SCROLL_VER
+            #if SCROLL_VERTICALLY
 
             /* Zoom the Icons when reach edge */
             lv_coord_t scroll_bar_y = lv_obj_get_scroll_y(_data.appPanel);
@@ -276,7 +276,7 @@ namespace MOONCAKE {
             lv_obj_add_flag(_data.appPanel, LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM);
             lv_obj_set_scrollbar_mode(_data.appPanel, LV_SCROLLBAR_MODE_OFF);
 
-            #if SCROLL_VER
+            #if SCROLL_VERTICALLY
             lv_obj_set_scroll_dir(_data.appPanel, LV_DIR_VER);
             #else 
             lv_obj_set_scroll_dir(_data.appPanel, LV_DIR_HOR);
@@ -334,7 +334,7 @@ namespace MOONCAKE {
                  * @brief Vertical
                  * 
                  */
-                #if SCROLL_VER
+                #if SCROLL_VERTICALLY
 
                 /* Put App in hexagon mesh */
                 if (!is_long_row) {
@@ -399,7 +399,7 @@ namespace MOONCAKE {
             }
 
             /* Hit an event to update icon zoom once */
-            #if SCROLL_VER
+            #if SCROLL_VERTICALLY
             lv_obj_scroll_to_y(_data.appPanel, 1, LV_ANIM_OFF);
             #else
             lv_obj_scroll_to_x(_data.appPanel, 1, LV_ANIM_OFF);

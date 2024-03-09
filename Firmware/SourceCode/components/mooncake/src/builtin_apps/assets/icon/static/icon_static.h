@@ -35,3 +35,13 @@ LV_IMG_DECLARE(ui_img_sun_108_png);
 LV_IMG_DECLARE(ui_img_pvz_108_png);
 LV_IMG_DECLARE(ui_img_watch_face_108_png);
 LV_IMG_DECLARE(ui_img_cursor_hand);
+
+LV_IMG_DECLARE(ui_img_cpu_108_png);
+LV_IMG_DECLARE(ui_img_folder_108_png);
+LV_IMG_DECLARE(ui_img_graphic_speed_108_png);
+LV_IMG_DECLARE(ui_img_mqtt_108_png);
+LV_IMG_DECLARE(ui_img_player_108_png);
+LV_IMG_DECLARE(ui_img_python_108_png);
+LV_IMG_DECLARE(ui_img_sdcard_108_png);
+LV_IMG_DECLARE(ui_img_usb_108_png);
+LV_IMG_DECLARE(ui_img_wifi_108_png);

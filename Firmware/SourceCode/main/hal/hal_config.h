@@ -48,3 +48,5 @@
 #define BRIGHTNESS          64
 
 #define ENABLE_LVGL_BLACK_WATCH     1
+
+#define USE_CUSTOM_WATCH_FACE_APP   0
