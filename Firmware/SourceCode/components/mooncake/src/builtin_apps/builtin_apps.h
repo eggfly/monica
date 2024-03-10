@@ -13,6 +13,10 @@
 #include "sketchpad/sketchpad.h"
 #include "wf_spring_wreath/wf_spring_wreath.h"
 #include "wf_user_custom/wf_user_custom.h"
-#include "pvz_app/pvz_app.h"
+#include "PvZ_App/app.h"
+#include "Aircraft_App/app.h"
+#include "Tetris_App/app.h"
+#include "Breakout_App/app.h"
 #include "settings/settings.h"
 #include "brightness/settings_brightness.h"
+

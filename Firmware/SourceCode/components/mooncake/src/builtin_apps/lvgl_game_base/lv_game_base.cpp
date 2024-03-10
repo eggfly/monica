@@ -1,12 +1,5 @@
-/**
- * @brief 
- * @version 0.1
- * @date 2023-05-28
- * 
- * @copyright Copyright (c) 2023
- * 
- */
-#include "pvz_app.h"
+
+#include "lv_game_base.h"
 #include "../assets/assets.h"
 #include <ArduinoJson.hpp>
 
@@ -15,17 +8,12 @@
 #include <stdlib.h>
 #include <esp_system.h>
 
-extern "C" {
-    void pvz_start();
-    void exit_game_cb(lv_event_t *e);
-}
-
 
 namespace MOONCAKE {
     namespace BUILTIN_APP {
 
 
-        void PvZ::_lvgl_event_cb(lv_event_t* e)
+        void LvglGameBase::_lvgl_event_cb(lv_event_t* e)
         {
             /* Get event code */
             lv_event_code_t code = lv_event_get_code(e);
@@ -33,13 +21,13 @@ namespace MOONCAKE {
         }
 
 
-        void PvZ::_update_data()
+        void LvglGameBase::_update_data()
         {
         }
 
 
 
-        void PvZ::onSetup()
+        void LvglGameBase::onSetup()
         {
             setAppName("Plants vs Zombies");
             setAllowBgRunning(false);
@@ -48,14 +36,12 @@ namespace MOONCAKE {
 
 
         /* Life cycle */
-        void PvZ::onCreate()
+        void LvglGameBase::onCreate()
         {
             printf("[%s] onCreate\n", getAppName().c_str());
-            // eggfly
-            lv_disp_set_rotation(NULL, LV_DISP_ROT_270);
             /* make data goes default */
             {
-                PVZ::Data_t data;
+                LV_GAME_BASE::Data_t data;
                 _data = data;
             }
 
@@ -63,18 +49,21 @@ namespace MOONCAKE {
             /* Reset at first */
             *_data.key_home_ptr = false;
             
-            pvz_start();
+            // pvz_start();
+            // ballgame_start();
+            // fly_game_start();
+            // 
 
         }
 
 
-        void PvZ::onResume()
+        void LvglGameBase::onResume()
         {
             printf("[%s] onResume\n", getAppName().c_str());
         }
 
 
-        void PvZ::onRunning()
+        void LvglGameBase::onRunning()
         {
             /* Update data */
             if ((lv_tick_get() - _data.update_count) > _data.update_interval) {
@@ -94,8 +83,6 @@ namespace MOONCAKE {
                 lv_obj_t* scr = lv_obj_create(NULL);
                 lv_scr_load_anim(scr, LV_SCR_LOAD_ANIM_NONE, 0, 0, true);
                 #endif
-                exit_game_cb(nullptr);
-                lv_disp_set_rotation(NULL, LV_DISP_ROT_NONE);
                 destroyApp();
                 // esp_restart();
             }
@@ -103,19 +90,19 @@ namespace MOONCAKE {
         }
 
 
-        void PvZ::onRunningBG()
+        void LvglGameBase::onRunningBG()
         {
 
         }
 
 
-        void PvZ::onPause()
+        void LvglGameBase::onPause()
         {
             printf("[%s] onPause\n", getAppName().c_str());
         }
 
 
-        void PvZ::onDestroy()
+        void LvglGameBase::onDestroy()
         {
             printf("[%s] onDestroy\n", getAppName().c_str());
         }

@@ -41,6 +41,8 @@
 #define USE_IMU_POINTER 0
 
 extern "C" {
+extern lv_indev_t * indev_touchpad;
+
 void spi_flash_mmap_dump(void);
 }
 
@@ -200,7 +202,6 @@ private:
      */
     {
       static lv_indev_drv_t indev_drv;
-
       /*------------------
        * Touchpad
        * -----------------*/
@@ -209,6 +210,7 @@ private:
       indev_drv.type = LV_INDEV_TYPE_POINTER;
       indev_drv.read_cb = _touchpad_read;
       lv_indev_t *indev_mouse = lv_indev_drv_register(&indev_drv);
+      indev_touchpad = indev_mouse;
       lv_obj_t *mouse_cursor = lv_img_create(lv_scr_act());
       lv_img_set_src(mouse_cursor, &ui_img_cursor_hand);
       lv_indev_set_cursor(indev_mouse, mouse_cursor);

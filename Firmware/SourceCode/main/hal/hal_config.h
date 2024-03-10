@@ -45,7 +45,7 @@
 #define HAL_PIN_SD_D2       48
 #define HAL_PIN_SD_D3       21
 
-#define BRIGHTNESS          64
+#define BRIGHTNESS          100
 
 #define ENABLE_LVGL_BLACK_WATCH     1
 

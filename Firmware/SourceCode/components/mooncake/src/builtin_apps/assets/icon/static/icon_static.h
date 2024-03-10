@@ -32,9 +32,14 @@ LV_IMG_DECLARE(ui_img_app_icon_hdpi_wf_user_custom_png);    // assets\app_icon_h
 LV_IMG_DECLARE(ui_img_app_icon_hdpi_sketchpad_png);    // assets\app_icon_hdpi_sketchpad.png
 LV_IMG_DECLARE(ui_img_app_icon_hdpi_settings_png);    // assets\app_icon_hdpi_settings.png
 LV_IMG_DECLARE(ui_img_sun_108_png);
-LV_IMG_DECLARE(ui_img_pvz_108_png);
 LV_IMG_DECLARE(ui_img_watch_face_108_png);
 LV_IMG_DECLARE(ui_img_cursor_hand);
+
+// games
+LV_IMG_DECLARE(ui_img_aircraft_108_png);
+LV_IMG_DECLARE(ui_img_breakout_108_png);
+LV_IMG_DECLARE(ui_img_pvz_108_png);
+LV_IMG_DECLARE(ui_img_tetris_108_png);
 
 LV_IMG_DECLARE(ui_img_cpu_108_png);
 LV_IMG_DECLARE(ui_img_folder_108_png);

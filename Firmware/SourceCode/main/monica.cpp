@@ -142,6 +142,15 @@ extern "C" void app_main(void) {
   app_ptr = new BUILTIN_APP::PvZ;
   mooncake_ui.install(app_ptr, nullptr);
 
+  app_ptr = new BUILTIN_APP::Aircraft;
+  mooncake_ui.install(app_ptr, nullptr);
+
+  app_ptr = new BUILTIN_APP::Breakout;
+  mooncake_ui.install(app_ptr, nullptr);
+
+  app_ptr = new BUILTIN_APP::Tetris;
+  mooncake_ui.install(app_ptr, nullptr);
+
   /* User custom watch face */
 #if USE_CUSTOM_WATCH_FACE_APP == 1
   /* User custom watch face */

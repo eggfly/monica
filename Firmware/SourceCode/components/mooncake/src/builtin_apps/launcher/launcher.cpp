@@ -338,7 +338,7 @@ namespace MOONCAKE {
 
                 /* Put App in hexagon mesh */
                 if (!is_long_row) {
-                    lv_obj_set_pos(app, icon_x + _bubble_cfg.iconSpaceX / 2 + _bubble_cfg.iconXoffset, icon_y + _bubble_cfg.iconYoffset);
+                    lv_obj_set_pos(app, icon_x + ///,,.iconSpaceX / 2 + _bubble_cfg.iconXoffset, icon_y + _bubble_cfg.iconYoffset);
                 }
                 else {
                     lv_obj_set_pos(app, icon_x + _bubble_cfg.iconXoffset, icon_y + _bubble_cfg.iconYoffset);
