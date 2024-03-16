@@ -17,8 +17,11 @@ function do_work() {
     if [[ "$1" == "--only-build" ]]; then
         idf.py build
         cd build
-        esptool --chip esp32s3 merge_bin -o ../monica-firmware-0x0.bin @flash_args
+        # DATE=`date +%Y%m%d%H%M%S`
+        DATE=`date +%Y%m%d`
+        esptool --chip esp32s3 merge_bin -o ../monica_firmware_0x0_$DATE.bin @flash_args
         cd -
+        zip monica_firmware_0x0_$DATE.zip monica_firmware_0x0_$DATE.bin
     else
         SERIAL_PORT=`ls /dev/cu.usbmodem* 2>/dev/null`
         if [[ -z "$SERIAL_PORT" ]]; then
