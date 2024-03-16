@@ -17,6 +17,7 @@
 #include "Aircraft_App/app.h"
 #include "Tetris_App/app.h"
 #include "Breakout_App/app.h"
+#include "Game_2048_App/app.h"
 #include "settings/settings.h"
 #include "brightness/settings_brightness.h"
 

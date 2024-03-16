@@ -151,6 +151,9 @@ extern "C" void app_main(void) {
   app_ptr = new BUILTIN_APP::Tetris;
   mooncake_ui.install(app_ptr, nullptr);
 
+  app_ptr = new BUILTIN_APP::Game2048;
+  mooncake_ui.install(app_ptr, nullptr);
+
   /* User custom watch face */
 #if USE_CUSTOM_WATCH_FACE_APP == 1
   /* User custom watch face */

@@ -40,7 +40,9 @@ LV_IMG_DECLARE(ui_img_aircraft_108_png);
 LV_IMG_DECLARE(ui_img_breakout_108_png);
 LV_IMG_DECLARE(ui_img_pvz_108_png);
 LV_IMG_DECLARE(ui_img_tetris_108_png);
+LV_IMG_DECLARE(ui_img_game_2048_108_png);
 
+// apps
 LV_IMG_DECLARE(ui_img_cpu_108_png);
 LV_IMG_DECLARE(ui_img_folder_108_png);
 LV_IMG_DECLARE(ui_img_graphic_speed_108_png);

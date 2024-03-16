@@ -18,30 +18,28 @@
 #include <stdlib.h>
 
 extern "C" {
-
-void fly_game_start();
-void flygame_all_clear(lv_event_t *e);
-
+void lv_100ask_2048_simple_test();
 }
 
 namespace MOONCAKE {
 namespace BUILTIN_APP {
 
-void Aircraft::onSetup() {
-  setAppName("Aircraft");
+void Game2048::onSetup() {
+  setAppName("2048");
   setAllowBgRunning(false);
-  setAppIcon((void *)&ui_img_aircraft_108_png);
+  setAppIcon((void *)&ui_img_game_2048_108_png);
 }
 
-void Aircraft::onCreate() {
+void Game2048::onCreate() {
   LvglGameBase::onCreate();
   // eggfly
-  fly_game_start();
+  lv_100ask_2048_simple_test();
 }
 
-void Aircraft::onDestroy() {
+void Game2048::onDestroy() {
   LvglGameBase::onDestroy();
-  flygame_all_clear(nullptr);
+  // reboot!
+  esp_restart();
 }
 
 } // namespace BUILTIN_APP
