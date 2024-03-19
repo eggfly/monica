@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
@@ -55,45 +57,28 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+extension SplitWrite on BluetoothCharacteristic {
+  Future<void> splitWrite(List<int> value, {int timeout = 15}) async {
+    int chunk = device.mtuNow - 3; // 3 bytes ble overhead
+    print(device.mtuNow); // 515
+    for (int i = 0; i < value.length; i += chunk) {
+      List<int> subValue = value.sublist(i, min(i + chunk, value.length));
+      await write(subValue, withoutResponse: false, timeout: timeout);
+    }
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  BluetoothDevice? _connectedDevice;
 
-  Future<void> _incrementCounter() async {
-    // listen to scan results
-    // Note: `onScanResults` only returns live scan results, i.e. during scanning
-    // Use: `scanResults` if you want live scan results *or* the results from a previous scan
-    var subscription = FlutterBluePlus.onScanResults.listen(
-      (results) {
-        if (results.isNotEmpty) {
-          ScanResult r = results.last; // the most recently found device
-          print(
-              '${r.device.remoteId}: "${r.advertisementData.advName}" found!');
-        }
-      },
-      onError: (e) => print(e),
-    );
-
-// cleanup: cancel subscription when scanning stops
-    FlutterBluePlus.cancelWhenScanComplete(subscription);
-
-// Wait for Bluetooth enabled & permission granted
-// In your real app you should use `FlutterBluePlus.adapterState.listen` to handle all states
-    await FlutterBluePlus.adapterState
-        .where((val) => val == BluetoothAdapterState.on)
-        .first;
-
-// Start scanning w/ timeout
-// Optional: you can use `stopScan()` as an alternative to using a timeout
-// Note: scan filters use an *or* behavior. i.e. if you set `withServices` & `withNames`
-//   we return all the advertisments that match any of the specified services *or* any
-//   of the specified names.
-    await FlutterBluePlus.startScan(
-        // withServices: [Guid("180D")],
-        withNames: ["UART Service"],
-        timeout: const Duration(seconds: 15));
-
-// wait for scanning to stop
-    await FlutterBluePlus.isScanning.where((val) => val == false).first;
+  Future<void> _onButtonClicked() async {
+    if (_connectedDevice == null) {
+      await _startScanAndConnect();
+    } else {
+      await _connectedDevice!.disconnect();
+      _connectedDevice = null;
+    }
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
@@ -102,6 +87,68 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  Future<void> _startScanAndConnect() async {
+    // listen to scan results
+    // Note: `onScanResults` only returns live scan results, i.e. during scanning
+    // Use: `scanResults` if you want live scan results *or* the results from a previous scan
+    var subscription = FlutterBluePlus.onScanResults.listen(
+      (results) async {
+        if (results.isNotEmpty) {
+          ScanResult r = results.last; // the most recently found device
+          print(
+              '${r.device.remoteId}: "${r.advertisementData.advName}" found!');
+          var device = r.device;
+          var subscription = device.connectionState.listen((state) async {
+            if (state == BluetoothConnectionState.disconnected) {
+              print("${device.disconnectReason}");
+            }
+          });
+          device.cancelWhenDisconnected(subscription,
+              delayed: true, next: true);
+          await device.connect();
+          _connectedDevice = device;
+          List<BluetoothService> services = await device.discoverServices();
+          for (var service in services) {
+            // Reads all characteristics
+            var characteristics = service.characteristics;
+            for (BluetoothCharacteristic c in characteristics) {
+              if (c.properties.read) {
+                List<int> value = await c.read();
+                print(value);
+              } else if (c.properties.write) {
+                var intList = List<int>.generate(513, (index) => index);
+                await c.splitWrite(intList);
+              }
+            }
+          }
+        }
+      },
+      onError: (e) => print(e),
+    );
+
+    // cleanup: cancel subscription when scanning stops
+    FlutterBluePlus.cancelWhenScanComplete(subscription);
+
+    // Wait for Bluetooth enabled & permission granted
+    // In your real app you should use `FlutterBluePlus.adapterState.listen` to handle all states
+    await FlutterBluePlus.adapterState
+        .where((val) => val == BluetoothAdapterState.on)
+        .first;
+
+    // Start scanning w/ timeout
+    // Optional: you can use `stopScan()` as an alternative to using a timeout
+    // Note: scan filters use an *or* behavior. i.e. if you set `withServices` & `withNames`
+    //   we return all the advertisments that match any of the specified services *or* any
+    //   of the specified names.
+    await FlutterBluePlus.startScan(
+        // withServices: [Guid("180D")],
+        withNames: ["UART Service"],
+        timeout: const Duration(seconds: 15));
+
+    // wait for scanning to stop
+    await FlutterBluePlus.isScanning.where((val) => val == false).first;
   }
 
   @override
@@ -151,11 +198,33 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton:
+          buildButtons(), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget buildButtons() {
+    // return Padding(
+    //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+    //     child: Row(
+    //       children: [
+    //         FloatingActionButton(
+    //           onPressed: _onButtonClicked,
+    //           tooltip: "Stop",
+    //           backgroundColor: Colors.accents.first,
+    //           child: const Icon(Icons.stop),
+    //         ),
+    //         const Spacer(),
+    //         FloatingActionButton(
+    //           onPressed: () {},
+    //           child: const Icon(Icons.add),
+    //         ),
+    //       ],
+    //     ));
+    return FloatingActionButton(
+      onPressed: _onButtonClicked,
+      tooltip: 'Connect/Disconnect',
+      child: const Icon(Icons.add),
     );
   }
 }
