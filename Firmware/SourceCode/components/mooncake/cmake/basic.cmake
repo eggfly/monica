@@ -52,6 +52,8 @@ target_include_directories(mooncake PUBLIC
 set(COMPILE_OPTIONS
     -Wno-missing-prototypes
     -Wno-deprecated-enum-enum-conversion
+    -Wno-sequence-point
+    -Wno-error=sequence-point
 )
 
 target_compile_options(mooncake PUBLIC ${COMPILE_OPTIONS})

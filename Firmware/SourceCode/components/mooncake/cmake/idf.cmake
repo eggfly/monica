@@ -39,6 +39,14 @@ set(MOONCAKE_PRIV_REQUIRES
 
 message(STATUS "mooncake use components = ${MOONCAKE_REQUIRES}")
 
+
+set(COMPILE_OPTIONS
+    -Wno-missing-prototypes
+    -Wno-deprecated-enum-enum-conversion
+    -Wno-sequence-point
+    -Wno-error=sequence-point
+)
+
 # Register component
 idf_component_register(SRCS ${MOONCAKE_SRCS} ${BUILTIN_APPS_SRCS} ${MOONCAKE_ROOT_DIR}/src/mooncake.cpp
                 #   SRC_DIRS ${MOONCAKE_SRC_DIRS}
