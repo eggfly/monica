@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:flutter_archive/flutter_archive.dart';
+import 'package:archive/archive.dart';
 
 void main() {
   runApp(const MyApp());
@@ -64,6 +68,7 @@ extension SplitWrite on BluetoothCharacteristic {
     for (int i = 0; i < value.length; i += chunk) {
       List<int> subValue = value.sublist(i, min(i + chunk, value.length));
       await write(subValue, withoutResponse: false, timeout: timeout);
+      debugPrint("current i=$i");
     }
   }
 }
@@ -71,8 +76,14 @@ extension SplitWrite on BluetoothCharacteristic {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   BluetoothDevice? _connectedDevice;
+  List<int>? _firmwareData;
 
   Future<void> _onButtonClicked() async {
+    _firmwareData ??= await extractFirmwareToMem();
+    if (_firmwareData == null) {
+      debugPrint("_firmwareData cannot find!");
+      return;
+    }
     if (_connectedDevice == null) {
       await _startScanAndConnect();
     } else {
@@ -87,6 +98,20 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  Future<List<int>?> extractFirmwareToMem() async {
+    var data = await rootBundle.load('assets/monica_firmware_0x0_20240316.zip');
+    List<int> bytes = data.buffer.asUint8List();
+    Archive archive = ZipDecoder().decodeBytes(bytes);
+    for (ArchiveFile file in archive) {
+      if (file.name.endsWith(".bin") && file.name.contains('firmware')) {
+        List<int> extractedData = file.content;
+        return extractedData;
+        print('Extracted file content: ${String.fromCharCodes(extractedData)}');
+      }
+    }
+    return null;
   }
 
   Future<void> _startScanAndConnect() async {
@@ -116,10 +141,17 @@ class _MyHomePageState extends State<MyHomePage> {
             for (BluetoothCharacteristic c in characteristics) {
               if (c.properties.read) {
                 List<int> value = await c.read();
-                print(value);
+                debugPrint(value.toString());
               } else if (c.properties.write) {
-                var intList = List<int>.generate(513, (index) => index);
-                await c.splitWrite(intList);
+                // var intList = List<int>.generate(513, (index) => index);
+                Stopwatch stopwatch = Stopwatch()..start();
+                if (Platform.isAndroid) {
+                  var req = await device.requestMtu(2048);
+                }
+                await c.splitWrite(_firmwareData!);
+                stopwatch.stop();
+                debugPrint(
+                    'Elapsed time: ${stopwatch.elapsedMilliseconds} milliseconds');
               }
             }
           }

@@ -23,18 +23,6 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
-#include <esp_bt.h>
-
-#define TAG "ble"
-
-
-#define check_err_code(err_code, message) do { \
-    if (err_code == ESP_OK) { \
-      Serial.printf("%s,OK\n", message); \
-    } else { \
-      Serial.printf("%s,Fail,%d\n", message, err_code); \
-    } \
-  } while(0);
 
 BLEServer *pServer = NULL;
 BLECharacteristic * pTxCharacteristic;
@@ -60,25 +48,27 @@ class MyServerCallbacks: public BLEServerCallbacks {
     }
 };
 
+uint32_t total = 0;
+
 class MyCallbacks: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic) {
       std::string rxValue = pCharacteristic->getValue();
       uint8_t * dat = pCharacteristic->getData();
       size_t len = pCharacteristic->getLength();
       if (rxValue.length() > 0) {
-        Serial.print("*********");
-        Serial.print("length=");
-        Serial.print(rxValue.length());
+        total += len;
+        //        Serial.print("len=");
+        //        Serial.print(rxValue.length());
         Serial.print("len=");
-        Serial.println(len);
-        Serial.print("Received Value: ");
-        for (int i = 0; i < rxValue.length(); i++) {
-          Serial.print(rxValue[i]);
-          Serial.print(dat[i]);
-        }
-
+        Serial.print(len);
+        Serial.print(", total=");
+        Serial.print(total);
+        //        Serial.print("Received Value: ");
+        //        for (int i = 0; i < rxValue.length(); i++) {
+        //          Serial.print(rxValue[i]);
+        //          Serial.print(dat[i]);
+        //        }
         Serial.println();
-        Serial.println("*********");
       }
     }
 };
@@ -89,6 +79,7 @@ void setup() {
 
   // Create the BLE Device
   BLEDevice::init("UART Service");
+
   // Create the BLE Server
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new MyServerCallbacks());
@@ -117,27 +108,15 @@ void setup() {
   // Start advertising
   pServer->getAdvertising()->start();
   Serial.println("Waiting a client connection to notify...");
-  {
-    auto pwr = esp_ble_tx_power_get(ESP_BLE_PWR_TYPE_ADV);
-    Serial.printf("POWER=%d\n", pwr);
-  }
-  esp_power_level_t target_power = ESP_PWR_LVL_N24; // ESP_PWR_LVL_P18
-  check_err_code(esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_ADV, target_power), "set power");
-  check_err_code(esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_SCAN, target_power), "set power");
-  check_err_code(esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_DEFAULT, target_power), "set power");
-  {
-    auto pwr = esp_ble_tx_power_get(ESP_BLE_PWR_TYPE_ADV);
-    Serial.printf("POWER=%d\n", pwr);
-  }
 }
 
 void loop() {
   if (deviceConnected) {
-    txValue = millis() / 1000;
-    pTxCharacteristic->setValue((uint8_t*)&txValue, 4);
-    pTxCharacteristic->notify();
+    //    txValue = millis() / 1000;
+    //    pTxCharacteristic->setValue((uint8_t*)&txValue, 4);
+    //    pTxCharacteristic->notify();
     // txValue++;
-    delay(10); // bluetooth stack will go into congestion, if too many packets are sent
+    delay(0); // bluetooth stack will go into congestion, if too many packets are sent
   }
 
   // disconnecting
