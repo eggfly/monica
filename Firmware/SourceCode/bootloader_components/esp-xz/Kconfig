@@ -1,0 +1,9 @@
+menu "XZ decompressor config"
+
+    config XZ_DECOMPRESS_DEBUG_ON
+        bool "Enable xz decompress debug log output"
+        default n
+        help
+            Enable xz decompress debug log output
+    
+endmenu

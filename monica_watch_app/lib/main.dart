@@ -1,10 +1,12 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:flutter_archive/flutter_archive.dart';
 import 'package:archive/archive.dart';
 
 void main() {
@@ -73,17 +75,72 @@ extension SplitWrite on BluetoothCharacteristic {
   }
 }
 
+void main3(List<int> data) {
+  GZipCodec codec = GZipCodec();
+  List<int> compressedData = [];
+
+  // 模拟分块解压缩数据
+  for (int i = 0; i < data.length; i += 4) {
+    List<int> chunk = data.sublist(i, i + 4);
+    List<int> result = codec.encoder.convert(chunk);
+    compressedData.addAll(result);
+  }
+
+  debugPrint("CompressedData data: ${utf8.decode(compressedData)}");
+}
+
+Future<void> main2() async {
+  // Stream compression
+  List<int> compressedData = [];
+  GZipCodec codec = GZipCodec();
+  List<int> data = utf8.encode("Hello, world!");
+  StreamController<List<int>> controller = StreamController<List<int>>();
+  StreamSink<List<int>> sink = codec.encoder
+      .bind(controller.sink as Stream<List<int>>) as StreamSink<List<int>>;
+  controller.stream.listen((chunk) {
+    sink.add(chunk);
+  }, onDone: () {
+    sink.close();
+  });
+  controller.add(data);
+  await controller.close();
+
+  debugPrint("Compressed data: $compressedData");
+
+  // Stream decompression
+  List<int> decompressedData = [];
+  StreamController<List<int>> controller2 = StreamController<List<int>>();
+  StreamSink<List<int>> sink2 = codec.decoder
+      .bind(controller2.sink as Stream<List<int>>) as StreamSink<List<int>>;
+  controller2.stream.listen((chunk) {
+    decompressedData.addAll(chunk);
+  }, onDone: () {
+    if (kDebugMode) {
+      print("Decompressed data: ${utf8.decode(decompressedData)}");
+    }
+  });
+  controller2.add(compressedData);
+  await controller2.close();
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   BluetoothDevice? _connectedDevice;
   List<int>? _firmwareData;
+  List<int>? _zlibCompressedFirmwareData;
+  List<int>? _gzipCompressedFirmwareData;
 
   Future<void> _onButtonClicked() async {
     _firmwareData ??= await extractFirmwareToMem();
     if (_firmwareData == null) {
-      debugPrint("_firmwareData cannot find!");
+      debugPrint("Cannot find _firmwareData!");
       return;
     }
+    _zlibCompressedFirmwareData = _zlibCompress(_firmwareData!);
+    _gzipCompressedFirmwareData = _gzipCompress(_firmwareData!);
+
+    // await main2();
+    main3(_firmwareData!);
     if (_connectedDevice == null) {
       await _startScanAndConnect();
     } else {
@@ -103,6 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<List<int>?> extractFirmwareToMem() async {
     var data = await rootBundle.load('assets/monica_firmware_0x0_20240316.zip');
     List<int> bytes = data.buffer.asUint8List();
+    Uint8List a;
     Archive archive = ZipDecoder().decodeBytes(bytes);
     for (ArchiveFile file in archive) {
       if (file.name.endsWith(".bin") && file.name.contains('firmware')) {
@@ -258,5 +316,17 @@ class _MyHomePageState extends State<MyHomePage> {
       tooltip: 'Connect/Disconnect',
       child: const Icon(Icons.add),
     );
+  }
+
+  _zlibCompress(List<int> data) {
+    ZLibCodec codec = ZLibCodec();
+    List<int> compressedData = codec.encode(data);
+    return compressedData;
+  }
+
+  _gzipCompress(List<int> data) {
+    GZipCodec codec = GZipCodec();
+    List<int> compressedData = codec.encode(data);
+    return compressedData;
   }
 }

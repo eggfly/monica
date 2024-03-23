@@ -1,0 +1,42 @@
+menu "Bootloader config (Custom)"
+    config BOOTLOADER_COMPRESSED_ENABLED
+        bool "Enable compressed ota support."
+        default y
+
+    choice BOOTLOADER_CUSTOM_DECOMPRESSOR
+        prompt "Choose decompressor"
+        default BOOTLOADER_DECOMPRESSOR_XZ
+        depends on BOOTLOADER_COMPRESSED_ENABLED
+        help
+            Choose the corresponding decompression method to decompress the compressed OTA binary.
+
+        config BOOTLOADER_DECOMPRESSOR_XZ
+        bool "XZ"
+        help
+            Using XZ decompressor in custom bootloader.
+            
+    endchoice
+    
+    config BOOTLOADER_CUSTOM_DEBUG_ON
+        bool "Turn on debug log in custom bootloader."
+        default n
+    
+    config BOOTLOADER_DIFF_ENABLED
+        bool "Enable diff compressed ota support."
+        default n
+
+    choice BOOTLOADER_CUSTOM_DIFF
+        prompt "Choose diff method"
+        default BOOTLOADER_DIFF_DDELTA
+        depends on BOOTLOADER_DIFF_ENABLED
+        help
+            Choose the corresponding diff method to decode the decompressed data.
+
+        config BOOTLOADER_DIFF_DDELTA
+        bool "ddelta"
+        help
+            Using ddelta to decode the decompressed data in custom bootloader.
+            
+    endchoice
+
+endmenu
